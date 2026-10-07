@@ -1,0 +1,1982 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Relatórios mensais de redes sociais, tráfego pago e marketing do Grupo Master.">
+<link rel="icon" type="image/png" href="img/master-symbol.png">
+<title>Relatórios Grupo Master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sidebar fixa de marcas à esquerda + área de relatório com hero tingido pela marca e grid bento de cards escuros. */
+:root{
+  color-scheme:dark;
+  --bg:#08080A; --bg-2:#0D0D10; --surface:#131316; --surface-2:#19191D; --surface-3:#202025;
+  --line:rgba(255,255,255,.065); --line-2:rgba(255,255,255,.11);
+  --fg:#F3F2EF; --fg-2:#A7A6AD; --fg-3:#6F6E76;
+  --up:#62D49C; --down:#F2B45A;
+  --a1:#248B95; --a2:#C9431F; --a-text:#62C3CC;
+  --grad:linear-gradient(45deg,#248B95 0%,#7A6656 55%,#C9431F 100%);
+  --f-display:"Familjen Grotesk","Geist",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r-lg:22px; --r-md:16px; --r-sm:10px;
+  --side:264px;
+}
+body[data-brand="pratique"]{--a1:#CC3E27;--a2:#F07446;--a-text:#F38667;--grad:linear-gradient(120deg,#A9301D 0%,#CC3E27 45%,#F07446 100%)}
+body[data-brand="impacto"]{--a1:#D42C11;--a2:#F38E22;--a-text:#F7A651;--grad:linear-gradient(120deg,#D42C11 0%,#E85C19 50%,#F38E22 100%)}
+body[data-brand="master"]{--a1:#248B95;--a2:#C9431F;--a-text:#62C3CC;--grad:linear-gradient(45deg,#248B95 0%,#7A6656 55%,#C9431F 100%)}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 14px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--a-text);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:500;letter-spacing:-.015em;margin:0;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--f-mono)}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.app{display:grid;grid-template-columns:var(--side) minmax(0,1fr);min-height:100%}
+.side{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;height:100dvh;display:flex;flex-direction:column;gap:22px;padding:22px 16px;border-right:1px solid var(--line);background:linear-gradient(180deg,#0B0B0E,#08080A)}
+.side-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 6px}
+.side-brand img{height:22px;width:auto}
+.side-brand span{font:500 11px/1 var(--f-mono);color:var(--fg-3);letter-spacing:.08em;text-transform:uppercase;margin-left:auto}
+.nav{display:flex;flex-direction:column;gap:18px;overflow:auto;min-height:0}
+.nav-group{display:flex;flex-direction:column;gap:4px}
+.nav-label{font:500 10.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);padding:0 10px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:12px;border:1px solid transparent;background:none;text-align:left;cursor:pointer;transition:background .15s,border-color .15s}
+.nav-item:hover{background:rgba(255,255,255,.03)}
+.nav-item .ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--line);flex:none;position:relative}
+.nav-item .ico img{width:15px;height:auto;max-height:18px}
+.nav-item .txt{display:flex;flex-direction:column;min-width:0}
+.nav-item .t1{font-weight:500;font-size:13.5px;line-height:1.25}
+.nav-item .t2{font-size:11.5px;color:var(--fg-3);line-height:1.3}
+.nav-item .st{margin-left:auto;width:7px;height:7px;border-radius:50%;background:var(--fg-3);opacity:.5;flex:none}
+.nav-item .st.on{background:var(--ndot,#fff);opacity:1;box-shadow:0 0 10px var(--ndot,#fff)}
+.nav-item[aria-current="page"]{background:var(--surface);border-color:var(--line-2)}
+.nav-item[aria-current="page"] .ico{border-color:transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--ngrad) border-box;box-shadow:0 0 18px -4px var(--nglow)}
+.side-foot{margin-top:auto;padding:12px 10px 0;border-top:1px solid var(--line);font-size:11.5px;color:var(--fg-3);line-height:1.45}
+
+.main{min-width:0;position:relative}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,3.2vw,40px);padding-block:0 72px}
+
+/* mobile nav */
+.mnav{display:none}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{display:none}
+  .mnav{display:flex;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;gap:8px;overflow-x:auto;padding:12px 16px;background:rgba(8,8,10,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);scrollbar-width:none}
+  .mnav::-webkit-scrollbar{display:none}
+  .mnav button{flex:none;display:flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:999px;border:1px solid var(--line-2);background:var(--surface);font-size:12.5px;white-space:nowrap;cursor:pointer}
+  .mnav button img{height:14px;width:auto}
+  .mnav button[aria-current="page"]{border-color:transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--grad) border-box}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);isolation:isolate}
+.hero::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:150%;background:radial-gradient(60% 55% at 22% 0%,color-mix(in oklab,var(--a1) 34%,transparent),transparent 70%),radial-gradient(40% 50% at 85% 10%,color-mix(in oklab,var(--a2) 22%,transparent),transparent 70%);z-index:-2;pointer-events:none}
+.hero .arc{position:absolute;right:-180px;bottom:-330px;width:720px;aspect-ratio:1;border-radius:50%;border:56px solid transparent;background:var(--grad) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);opacity:.42;z-index:-1;pointer-events:none;filter:saturate(1.1)}
+.hero .arc.b{right:-60px;bottom:-250px;width:560px;border-width:2px;opacity:.35}
+.hero .arc.c{right:-300px;bottom:-450px;width:960px;border-width:1px;opacity:.25}
+.hero-in{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,3.2vw,40px);padding-block:34px 30px;display:flex;flex-direction:column;gap:22px}
+.hero-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hero-logo{height:28px;width:auto;max-width:240px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 7px;border-radius:999px;border:1px solid var(--line-2);background:rgba(20,20,23,.7);backdrop-filter:blur(8px);font-size:12px;color:var(--fg-2);white-space:nowrap}
+.chip .pi{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:var(--surface-3)}
+.chip .pi svg{width:13px;height:13px}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--a-text);box-shadow:0 0 8px var(--a1)}
+.hero h1{font-size:clamp(30px,4.4vw,50px);line-height:1.04;font-weight:400;max-width:20ch}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lede{color:var(--fg-2);max-width:68ch;font-size:15px}
+.hero-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between}
+.months{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.months .lbl{font:500 10.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);margin-right:4px}
+.mbtn{padding:7px 13px;border-radius:999px;border:1px solid var(--line-2);background:rgba(20,20,23,.6);font-size:12.5px;cursor:pointer;color:var(--fg-2)}
+.mbtn[aria-pressed="true"]{color:var(--fg);border-color:transparent;background:linear-gradient(#17171B,#17171B) padding-box,var(--grad) border-box;box-shadow:0 0 20px -6px var(--a1)}
+.mbtn[disabled]{opacity:.45;cursor:default}
+.btn-pdf{display:inline-flex;align-items:center;gap:10px;padding:10px 16px 10px 14px;border-radius:999px;border:0;cursor:pointer;font-weight:500;font-size:13.5px;color:#140806;background:var(--grad);box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 8px 30px -8px var(--a1),0 0 22px -6px var(--a2);transition:transform .15s,box-shadow .15s}
+body[data-brand="master"] .btn-pdf{color:#fff}
+.btn-pdf:hover{transform:translateY(-1px)}
+.btn-pdf svg{width:16px;height:16px}
+.btn-pdf[disabled]{background:var(--surface-2);color:var(--fg-3);box-shadow:0 0 0 1px var(--line-2) inset;cursor:not-allowed;transform:none}
+.meta-line{display:flex;gap:8px 18px;flex-wrap:wrap;font-size:12px;color:var(--fg-3)}
+.meta-line b{font-weight:500;color:var(--fg-2)}
+
+/* subnav */
+.subnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;background:rgba(8,8,10,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.subnav-in{max-width:1180px;margin:0 auto;padding:10px clamp(16px,3.2vw,40px);display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.subnav-in::-webkit-scrollbar{display:none}
+.subnav a{flex:none;padding:6px 12px;border-radius:999px;font-size:12.5px;color:var(--fg-2);text-decoration:none;border:1px solid transparent}
+.subnav a:hover{color:var(--fg);border-color:var(--line-2)}
+@media (max-width:900px){.subnav{top:calc(env(safe-area-inset-top,0px) + 57px)}}
+
+/* ---------- sections ---------- */
+.sec{padding-top:56px;scroll-margin-top:70px}
+.eyebrow{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:14px}
+.eyebrow i{display:block;height:1px;width:56px;background:linear-gradient(90deg,transparent,var(--line-2));position:relative}
+.eyebrow i:last-child{background:linear-gradient(90deg,var(--line-2),transparent)}
+.eyebrow i::after{content:"";position:absolute;top:-2.5px;width:6px;height:6px;transform:rotate(45deg);background:var(--fg-3)}
+.eyebrow i:first-child::after{right:-3px}.eyebrow i:last-child::after{left:-3px}
+.eyebrow span{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;border:1px solid var(--line-2);background:var(--bg-2);font:500 11px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-2)}
+.eyebrow span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--a-text);box-shadow:0 0 8px var(--a1)}
+.sec-h{text-align:center;font-size:clamp(22px,2.8vw,32px);line-height:1.15;max-width:30ch;margin:0 auto}
+.sec-h span{color:var(--fg-3)}
+.sec-lede{text-align:center;color:var(--fg-2);max-width:72ch;margin:12px auto 0;font-size:14.5px}
+
+.grid{display:grid;gap:14px;margin-top:28px}
+.g-12{grid-template-columns:repeat(12,minmax(0,1fr))}
+.s-12{grid-column:span 12}.s-8{grid-column:span 8}.s-7{grid-column:span 7}.s-6{grid-column:span 6}.s-5{grid-column:span 5}.s-4{grid-column:span 4}.s-3{grid-column:span 3}
+@media (max-width:1100px){.s-3{grid-column:span 6}.s-4{grid-column:span 6}}
+@media (max-width:820px){.s-8,.s-7,.s-6,.s-5,.s-4{grid-column:span 12}}
+@media (max-width:520px){.s-3{grid-column:span 6}.kpi{padding:16px}.kpi .k-v{font-size:26px}.kpi .k-l{font-size:12px;min-height:3.9em}.grid{gap:10px}}
+
+.card{position:relative;background:linear-gradient(180deg,var(--surface),#111114);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;min-width:0;overflow:hidden}
+.card.glass{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01)),var(--surface)}
+.card.glow::after{content:"";position:absolute;inset:auto -20% -60% -20%;height:90%;background:radial-gradient(50% 50% at 50% 50%,color-mix(in oklab,var(--a1) 22%,transparent),transparent 70%);pointer-events:none}
+.card-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.card-h h3{font-size:17px;line-height:1.25}
+.card-sub{color:var(--fg-2);font-size:13px;max-width:62ch}
+.icobox{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;border:1px solid transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--grad) border-box;box-shadow:0 0 22px -6px var(--a1)}
+.icobox svg{width:16px;height:16px;stroke:var(--a-text);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icobox.raw svg{stroke:none;width:18px;height:18px}
+
+/* KPI tiles */
+.kpi{display:flex;flex-direction:column;gap:10px}
+.kpi .k-l{font-size:12.5px;color:var(--fg-2);line-height:1.3;min-height:2.6em}
+.kpi .k-v{font:400 34px/1 var(--f-body);letter-spacing:-.025em}
+.kpi .k-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--fg-3)}
+.delta{display:inline-flex;align-items:center;gap:4px;padding:3px 8px 3px 6px;border-radius:999px;font:500 11.5px/1.2 var(--f-mono);border:1px solid}
+.delta svg{width:11px;height:11px}
+.delta.up{color:var(--up);border-color:color-mix(in oklab,var(--up) 35%,transparent);background:color-mix(in oklab,var(--up) 10%,transparent)}
+.delta.down{color:var(--down);border-color:color-mix(in oklab,var(--down) 35%,transparent);background:color-mix(in oklab,var(--down) 10%,transparent)}
+.delta.flat{color:var(--fg-2);border-color:var(--line-2)}
+.kpi .bar2{display:grid;grid-template-columns:34px 1fr;gap:5px 8px;align-items:center;font:400 11px/1 var(--f-mono);color:var(--fg-3);margin-top:2px}
+.kpi .bar2 i{display:block;height:5px;border-radius:3px;background:var(--surface-3)}
+.kpi .bar2 i.cur{background:var(--grad);box-shadow:0 0 10px -2px var(--a1)}
+
+/* headline tile */
+.headline{display:flex;flex-direction:column;gap:16px;justify-content:space-between}
+.headline .big{font:400 clamp(22px,2.6vw,28px)/1.22 var(--f-display);letter-spacing:-.01em;max-width:30ch}
+.headline .big b{font-weight:500;color:var(--a-text)}
+.stat-pair{display:flex;gap:28px;flex-wrap:wrap}
+.stat-pair div{display:flex;flex-direction:column;gap:3px}
+.stat-pair .v{font-size:26px;letter-spacing:-.02em}
+.stat-pair .l{font-size:12px;color:var(--fg-3)}
+
+.notes{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.notes li{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:13px;color:var(--fg-2)}
+.notes li::before{content:"";width:6px;height:6px;margin-top:7px;border-radius:2px;transform:rotate(45deg);background:var(--fg-3)}
+.notes.gap li::before{background:var(--down)}
+
+.pillrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 13px 7px 9px;border-radius:12px;border:1px solid var(--line-2);background:var(--surface);font-size:12.5px;color:var(--fg-2)}
+.pill svg{width:14px;height:14px;flex:none}
+.pill.gap svg{stroke:var(--down)}
+
+/* charts */
+.chart{position:relative;width:100%;margin-top:14px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--fg-2);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:10px;height:10px;border-radius:3px;display:block}
+.tip{position:fixed;z-index:50;pointer-events:none;min-width:150px;max-width:260px;padding:10px 12px;border-radius:12px;background:rgba(24,24,28,.96);border:1px solid var(--line-2);box-shadow:0 12px 40px rgba(0,0,0,.5);font-size:12px;color:var(--fg-2);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+.tip.on{opacity:1;transform:none}
+.tip b{display:block;color:var(--fg);font-weight:500;font-size:12.5px;margin-bottom:4px}
+.tip .r{display:flex;justify-content:space-between;gap:14px}
+.tip .r span:last-child{color:var(--fg);font-family:var(--f-mono)}
+.hbars{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.hb{display:grid;grid-template-columns:minmax(90px,140px) 1fr auto;gap:12px;align-items:center;font-size:12.5px}
+.hb .n{color:var(--fg-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hb .t{height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden}
+.hb .t i{display:block;height:100%;border-radius:4px;background:var(--grad);box-shadow:0 0 12px -2px var(--a1)}
+.hb .v{font-family:var(--f-mono);font-size:12px;color:var(--fg);min-width:52px;text-align:right}
+.split{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin-top:14px}
+.split i{display:block;height:100%}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;margin-top:14px;border-radius:var(--r-md);border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+th{font:500 10.5px/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);text-align:left;padding:12px 14px;background:var(--bg-2);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--fg-2)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num{color:var(--fg)}
+td .pt{color:var(--fg);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line-2)}
+td .pt:hover{border-color:var(--a-text)}
+.rank{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--surface-3);font:500 12px/1 var(--f-mono);color:var(--fg)}
+tr:first-child .rank{background:var(--grad);color:#fff;box-shadow:0 0 14px -3px var(--a1)}
+.fmt{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--line-2);font-size:11.5px;color:var(--fg-2);white-space:nowrap}
+.fmt i{width:6px;height:6px;border-radius:50%;background:var(--a1)}
+.fmt.car i{background:transparent;border:1.5px solid var(--a-text)}
+
+/* tabs inside card */
+.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);gap:2px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:999px;font-size:12.5px;color:var(--fg-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface-3);color:var(--fg)}
+
+/* lists */
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:820px){.twocol{grid-template-columns:1fr}}
+.lst{display:flex;flex-direction:column;gap:12px;margin:14px 0 0;padding:0;list-style:none}
+.lst li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:13.5px;color:var(--fg-2)}
+.lst li b{color:var(--fg);font-weight:500}
+.lst .mk{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;margin-top:1px}
+.lst .mk svg{width:12px;height:12px;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.lst.ok .mk{background:color-mix(in oklab,var(--up) 14%,transparent)}.lst.ok .mk svg{stroke:var(--up)}
+.lst.warn .mk{background:color-mix(in oklab,var(--down) 14%,transparent)}.lst.warn .mk svg{stroke:var(--down)}
+
+.gapbig{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:12px 18px;align-items:center;margin-top:18px}
+.gapbig .n{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.02em;line-height:1}
+.gapbig .l{font-size:12.5px;color:var(--fg-2);max-width:20ch}
+.gapbig .arrow{grid-column:1/-1;height:1px;background:var(--grad);position:relative;opacity:.8}
+@media (max-width:620px){.gapbig{grid-template-columns:auto 1fr}}
+
+/* recommendations */
+.recs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:28px;counter-reset:rc}
+@media (max-width:820px){.recs{grid-template-columns:1fr}}
+.rec{display:flex;flex-direction:column;gap:10px}
+.rec:first-child{grid-column:1/-1}
+.rec .num{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font:500 14px/1 var(--f-mono);border:1px solid transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--grad) border-box}
+.rec:first-child .num{background:var(--grad);color:#fff;box-shadow:0 0 24px -4px var(--a1)}
+.rec h3{font-size:18px}
+.rec p{color:var(--fg-2);font-size:13.5px}
+.rec .why{font-size:12.5px;color:var(--fg-3);border-top:1px solid var(--line);padding-top:10px;margin-top:auto}
+.rec .why b{color:var(--fg-2);font-weight:500}
+
+/* scripts */
+.scripts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+@media (max-width:1050px){.scripts{grid-template-columns:1fr}}
+.script{display:flex;flex-direction:column;gap:12px}
+.script .tag{font:500 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a-text)}
+.script h3{font-size:19px;line-height:1.2}
+.script .base{font-size:12.5px;color:var(--fg-2)}
+.script .base a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line-2)}
+.tl{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column}
+.tl li{display:grid;grid-template-columns:14px 1fr;gap:12px;position:relative;padding-bottom:14px}
+.tl li::before{content:"";width:9px;height:9px;border-radius:50%;margin-top:5px;margin-left:2px;background:var(--bg);border:2px solid var(--a-text);box-shadow:0 0 10px -1px var(--a1)}
+.tl li::after{content:"";position:absolute;left:6px;top:17px;bottom:0;width:1px;background:var(--line-2)}
+.tl li:last-child::after{display:none}
+.tl li:last-child{padding-bottom:0}
+.tl .k{font:500 11px/1.4 var(--f-mono);color:var(--fg-3);display:block;letter-spacing:.02em}
+.tl .v{font-size:13px;color:var(--fg)}
+.tl li.cta .v{color:var(--fg-2)}
+
+/* empty */
+.empty{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px;margin-top:40px}
+@media (max-width:820px){.empty{grid-template-columns:1fr}}
+.empty .orb{position:relative;min-height:260px;display:grid;place-items:center}
+.orb .ring{position:absolute;border-radius:50%;border:1px solid var(--line-2)}
+.orb .ring.g{border:1px solid transparent;background:var(--grad) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0);opacity:.7}
+.orb .core{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;border:1px solid transparent;background:linear-gradient(#141417,#141417) padding-box,var(--grad) border-box;box-shadow:0 0 50px -8px var(--a1);position:relative}
+.orb .core img{width:30px;height:auto}
+.orb .sat{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--a-text);box-shadow:0 0 12px var(--a1)}
+
+/* overview account cards */
+.acc{display:flex;flex-direction:column;gap:16px;cursor:pointer;text-align:left;width:100%;font:inherit;color:inherit;transition:border-color .15s,transform .15s}
+.acc:hover{border-color:var(--line-2);transform:translateY(-2px)}
+.acc .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.acc .top img{height:20px;width:auto;max-width:160px}
+.acc .mini{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px}
+.acc .mini .v{font-size:22px;letter-spacing:-.02em}
+.acc .mini .l{font-size:11.5px;color:var(--fg-3)}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--fg-3);padding:4px 9px;border-radius:999px;border:1px solid var(--line-2)}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--fg-3)}
+.status.on{color:var(--fg-2)}.status.on i{background:var(--up);box-shadow:0 0 8px var(--up)}
+.acc .wait{color:var(--fg-3);font-size:13px;min-height:84px;display:flex;align-items:center}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;z-index:60;padding:10px 16px;border-radius:999px;background:#1d1d22;border:1px solid var(--line-2);font-size:13px;transition:.2s;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--fg-3);display:flex;gap:8px 20px;flex-wrap:wrap}
+
+/* ---------- v2: leitura simplificada ---------- */
+.hero-more{max-width:68ch}
+details.more{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+details.more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--a-text);padding:4px 10px 4px 0;border-radius:8px;user-select:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary svg{width:15px;height:15px;transition:transform .2s}
+details.more[open] summary svg{transform:rotate(180deg)}
+details.more .more-in{padding-top:10px;color:var(--fg-2);font-size:13.5px}
+details.more .more-in .tbl-wrap{margin-top:4px}
+.hero details.more{border-top:0;padding-top:0;margin-top:-6px}
+.hero details.more .more-in p{color:var(--fg-2);font-size:14px}
+.hl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:28px}
+@media (max-width:900px){.hl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hl-i{display:flex;flex-direction:column;gap:4px;padding:20px}
+.hl-v{font-size:clamp(30px,3.4vw,40px);letter-spacing:-.03em;line-height:1.05;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content;max-width:100%}
+.hl-l{font-weight:500;font-size:14px}
+.hl-s{font-size:12px;color:var(--fg-3)}
+.mini-cmp{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.mini-cmp>div{display:flex;flex-direction:column;gap:2px}
+.mini-cmp .v{font-size:28px;letter-spacing:-.02em;line-height:1.1}
+.mini-cmp .l{font-size:12px;color:var(--fg-3)}
+.mini-cmp .arr{color:var(--fg-3);font-size:20px}
+.foot-note{font-size:12.5px;color:var(--fg-3);margin:12px 4px 0;max-width:90ch}
+.ba{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.ba-i{display:flex;flex-direction:column;gap:4px}
+.ba-l{font-size:12px;color:var(--fg-2)}
+.ba-v{font-size:clamp(44px,5vw,60px);line-height:1;letter-spacing:-.03em}
+.ba-s{font-size:11.5px;color:var(--fg-3);max-width:22ch}
+.ba-mid{display:flex;flex-direction:column;align-items:center;gap:10px}
+.ba-mid i{display:block;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--a-text));position:relative}
+.ba-mid i::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid var(--a-text);border-right:1px solid var(--a-text);transform:rotate(45deg)}
+@media (max-width:560px){.ba{grid-template-columns:1fr 1fr}.ba-mid{grid-column:1/-1;order:3;align-items:flex-start}.ba-mid i{display:none}}
+.ba-bar{display:flex;gap:2px;height:10px;margin-top:22px;border-radius:5px;overflow:hidden;background:var(--surface-3)}
+.ba-bar i{display:block;background:#4A4A52}
+.ba-bar b{display:block;background:var(--grad);box-shadow:0 0 14px var(--a1)}
+.peaks{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.peaks li{display:grid;grid-template-columns:88px 1fr;gap:12px;font-size:13px;color:var(--fg-3)}
+.peaks b{color:var(--fg);font-weight:500}
+.pk-v{font:500 12px/1.6 var(--f-mono);color:var(--a-text)}
+.aud{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.3fr;gap:22px;margin-top:14px}
+@media (max-width:1000px){.aud{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.aud{grid-template-columns:1fr}}
+.aud>div{min-width:0}
+.aud-h{font:500 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3)}
+.aud-big{font-size:26px;letter-spacing:-.02em;margin-top:10px;line-height:1.1}
+.aud-s{font-size:12px;color:var(--fg-3)}
+.aud .hb{grid-template-columns:minmax(80px,110px) 1fr auto}
+.tiles2{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+@media (max-width:820px){.tiles2{grid-column:span 12}}
+.roles{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.roles p{font-size:13.5px;color:var(--fg-2)}
+.podium{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:14px;margin-top:28px}
+@media (max-width:900px){.podium{grid-template-columns:1fr}}
+.pod{display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:transform .15s,border-color .15s}
+.pod:hover{transform:translateY(-2px);border-color:var(--line-2)}
+.pod-top{display:flex;align-items:center;gap:8px}
+.pod-d{margin-left:auto;font:400 12px/1 var(--f-mono);color:var(--fg-3)}
+.pod h3{font-size:18px}
+.pod-v{font-size:34px;letter-spacing:-.02em}
+.pod.first .pod-v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pod-vl{font-size:12px;color:var(--fg-3)}
+.pod-link{font-size:12px;color:var(--a-text);margin-top:auto}
+.pod .rank{background:var(--surface-3)}.pod.first .rank{background:var(--grad);color:#fff}
+.cmp{display:flex;flex-direction:column;gap:22px}
+.cmp-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) auto;gap:18px;align-items:center}
+@media (max-width:760px){.cmp-row{grid-template-columns:1fr auto}.cmp-bar{grid-column:1/-1;order:3}}
+.cmp-h{display:flex;flex-direction:column;gap:2px}
+.cmp-h b{font-weight:500;font-size:14.5px}
+.cmp-h span{font-size:12px;color:var(--fg-3)}
+.cmp-bar{height:14px;border-radius:7px;background:var(--surface-3);overflow:hidden}
+.cmp-bar i{display:block;height:100%;border-radius:7px;background:#5A5A63}
+.cmp-bar i.hot{background:var(--grad);box-shadow:0 0 18px var(--a1)}
+.cmp-v{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.cmp-v .v{font-size:30px;letter-spacing:-.02em;line-height:1.05}
+.cmp-v .l{font-size:11.5px;color:var(--fg-3)}
+.att{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.att li{display:flex;flex-direction:column;gap:5px;padding-left:14px;border-left:2px solid color-mix(in oklab,var(--down) 55%,transparent)}
+.att-p{font-size:13.5px;color:var(--fg);font-weight:500}
+.att-a{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--fg-2)}
+.att-a svg{width:14px;height:14px;flex:none;margin-top:3px;color:var(--up)}
+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:820px){.actions{grid-template-columns:1fr}}
+.act{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.act:first-child{grid-column:1/-1}
+.actions.even .act:first-child{grid-column:auto}
+.act .num{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font:500 14px/1 var(--f-mono);border:1px solid transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--grad) border-box}
+.act:first-child .num{background:var(--grad);color:#fff;box-shadow:0 0 24px -4px var(--a1)}
+.act h3{font-size:17px}
+.act p{color:var(--fg-2);font-size:13.5px;margin-top:4px}
+.act details.more{margin-top:8px;padding-top:6px}
+.act .why{font-size:12.5px;color:var(--fg-3);margin:0}
+@media print{
+  .side,.mnav,.subnav,.btn-pdf,.months,.tip,.toast,details.more summary{display:none!important}
+  .app{display:block}
+  details.more{border-top:0;padding-top:0}
+  .card,.hl-i,.pod,.act,.cmp-row{break-inside:avoid}
+  .sec{break-inside:auto;padding-top:36px}
+  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .hero .arc{display:none}
+  .sec+.sec{break-before:page}
+  .hero h1 em,.hl-v,.pod.first .pod-v{background:none!important;-webkit-text-fill-color:var(--a-text);color:var(--a-text)!important}
+  .eyebrow,.sec-h{break-after:avoid}
+}
+
+/* ---------- marketing global ---------- */
+.orig{margin-top:18px}
+.orig-bar{display:flex;gap:3px;height:16px;border-radius:8px;overflow:hidden}
+.orig-bar i{display:block;height:100%;background:#4A4A52}
+.orig-bar i.hot{background:var(--grad);box-shadow:0 0 16px var(--a1)}
+.orig-leg{display:flex;justify-content:space-between;gap:16px;margin-top:14px}
+.orig-leg>div{display:flex;flex-direction:column;gap:2px}
+.orig-leg .v{font-size:34px;letter-spacing:-.02em;line-height:1}
+.orig-leg .l{font-size:12px;color:var(--fg-3);max-width:24ch}
+.brands{display:flex;flex-direction:column;gap:22px}
+.br-row{display:grid;grid-template-columns:170px minmax(0,1fr) auto;grid-template-areas:"h bar n" ". m m";gap:8px 18px;align-items:center}
+.br-h{grid-area:h;display:flex;align-items:center;gap:10px}
+.br-h b{font-weight:500;font-size:14.5px}
+.br-ico{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;border:1px solid transparent;background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,var(--g) border-box;box-shadow:0 0 16px -5px var(--gl);flex:none}
+.br-ico img{width:14px;height:auto;max-height:17px}
+.br-ico .li-ico svg{width:16px;height:16px;display:block}
+.br-bar{grid-area:bar;height:12px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.br-bar i{display:block;height:100%;border-radius:6px}
+.br-n{grid-area:n;display:flex;gap:14px;font-size:12px;color:var(--fg-3);white-space:nowrap}
+.br-n b{font:500 15px/1 var(--f-body);color:var(--fg);margin-right:2px}
+.br-m{grid-area:m;font-size:12.5px;color:var(--fg-2)}
+@media (max-width:760px){.br-row{grid-template-columns:1fr;grid-template-areas:"h" "bar" "n" "m"}.br-n{flex-wrap:wrap}}
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px 22px;margin-top:18px}
+.ty{display:grid;grid-template-columns:10px 1fr;gap:4px 10px;align-items:center}
+.ty i{width:10px;height:10px;border-radius:3px;display:block}
+.ty-t{font-size:13.5px;font-weight:500}
+.ty-n{grid-column:2;font-size:12px;color:var(--fg-3)}
+.ty-n b{color:var(--fg);font-weight:500}
+.hm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+@media (max-width:700px){.hm{grid-template-columns:1fr}}
+.hm>div{display:flex;flex-direction:column;gap:6px}
+.hm-v{font-size:clamp(36px,4vw,48px);letter-spacing:-.03em;line-height:1}
+.hm-v span{font-size:.5em;color:var(--fg-3)}
+.hm-l{font-size:12.5px;color:var(--fg-2);max-width:26ch}
+.shoots{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column}
+.shoots li{display:grid;grid-template-columns:minmax(0,1.2fr) auto;grid-template-areas:"t f" "u u";gap:3px 12px;padding:12px 0;border-top:1px solid var(--line)}
+.shoots li:first-child{border-top:0;padding-top:4px}
+.sh-t{grid-area:t;font-weight:500;font-size:13.5px}
+.sh-f{grid-area:f;font-size:11.5px;color:var(--fg-2);border:1px solid var(--line-2);border-radius:999px;padding:2px 9px;white-space:nowrap;align-self:center}
+.sh-u{grid-area:u;font-size:12.5px;color:var(--fg-3)}
+.steps{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:18px;position:relative}
+.steps li{display:grid;grid-template-columns:18px 1fr;gap:12px;font-size:13px;color:var(--fg-3)}
+.steps b{color:var(--fg);font-weight:500;font-size:14px}
+.steps .dot{width:14px;height:14px;border-radius:50%;margin-top:3px;border:2px solid var(--fg-3)}
+.steps .done .dot{border-color:var(--up);background:var(--up);box-shadow:0 0 12px var(--up)}
+.steps .doing .dot{border-color:var(--a-text);box-shadow:0 0 12px -2px var(--a1)}
+.hlist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+@media (max-width:900px){.hlist{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.hlist{grid-template-columns:1fr}}
+
+.hl-v{display:inline-flex;align-items:center;gap:8px}
+.hl-ar{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;-webkit-text-fill-color:initial}
+.hl-ar svg{width:11px;height:11px}
+.hl-ar.up{color:var(--up);background:color-mix(in oklab,var(--up) 14%,transparent)}
+.hl-ar.down{color:var(--down);background:color-mix(in oklab,var(--down) 14%,transparent)}
+
+/* ---------- tráfego pago ---------- */
+.splitbar{display:flex;gap:3px;height:16px;border-radius:8px;overflow:hidden;margin-top:18px}
+.splitbar i{display:block;height:100%}
+.splitbar i.m,.split-leg i.m{background:var(--a1);box-shadow:0 0 16px -2px var(--a1)}
+.splitbar i.g,.split-leg i.g{background:var(--a2)}
+.split-leg{display:flex;justify-content:space-between;gap:16px;margin-top:14px}
+.split-leg>div{display:flex;flex-direction:column;gap:3px}
+.sl-k{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--fg-2)}
+.sl-k i{width:10px;height:10px;border-radius:3px;display:block}
+.sl-v{font-size:30px;letter-spacing:-.02em;line-height:1.05}
+.sl-l{font-size:12px;color:var(--fg-3)}
+.plat .card-h{flex-wrap:wrap}
+.plat-sub{font-size:12px;color:var(--fg-3);margin-left:auto}
+.plat-inv{display:flex;flex-direction:column;gap:6px;margin:14px 0 6px}
+.plat-inv .v{font-size:34px;letter-spacing:-.025em;line-height:1}
+.plat-inv .l{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--fg-3)}
+.kvl{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column}
+.kvl li{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+.kvl .k{color:var(--fg-2)}
+.kvl .p{font:400 11.5px/1 var(--f-mono);color:var(--fg-3)}
+.kvl .v{font:500 15px/1 var(--f-body);color:var(--fg);text-align:right}
+.kvl.sm li{grid-template-columns:minmax(0,1fr) auto auto;padding:9px 0;font-size:12.5px}
+.kvl.sm .v{font-size:14px}
+.camps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:28px}
+@media (max-width:1000px){.camps{grid-template-columns:1fr}}
+.camp{display:flex;flex-direction:column;gap:6px}
+.camp-top{display:flex;align-items:center;gap:10px;justify-content:space-between;min-height:28px}
+.camp-top .status{padding:2px 8px}
+.camp-n{font:500 16px/1.25 var(--f-display)}
+.camp-g{font-size:12px;color:var(--fg-3)}
+.camp-r{display:flex;align-items:baseline;gap:8px;margin:12px 0 4px}
+.camp-r .v{font-size:42px;letter-spacing:-.03em;line-height:1}
+.camp.glow .camp-r .v{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.camp-r .l{font-size:12.5px;color:var(--fg-2)}
+.camp details.more{margin-top:auto}
+.ads{display:flex;flex-direction:column;gap:18px;margin-top:20px}
+.ad{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"h n" "b b";gap:8px 16px;align-items:end}
+.ad-h{grid-area:h;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ad-h b{font-weight:500;font-size:14.5px}
+.ad-h span{font-size:12px;color:var(--fg-3)}
+.ad.org .ad-h span{color:var(--a-text)}
+.ad-bar{grid-area:b;height:10px;border-radius:5px;background:var(--surface-3);overflow:hidden}
+.ad-bar i{display:block;height:100%;border-radius:5px;background:#5A5A63}
+.ad.org .ad-bar i{background:var(--grad);box-shadow:0 0 14px var(--a1)}
+.ad-n{grid-area:n;display:flex;align-items:baseline;gap:14px;font-size:12px;color:var(--fg-3);white-space:nowrap}
+.ad-n b{font-weight:500;color:var(--fg);font-size:13.5px}
+.ad-c{font:500 18px/1 var(--f-body);color:var(--fg)}
+.ad.org .ad-c{color:var(--a-text)}
+.ad-c small{font-size:11px;color:var(--fg-3);font-weight:400;margin-left:2px}
+.vfun{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.vf{display:grid;grid-template-columns:110px 1fr 54px;gap:12px;align-items:center;font-size:12.5px}
+.vf .n{color:var(--fg-2)}
+.vf .t{height:12px;border-radius:6px;background:var(--surface-3);overflow:hidden}
+.vf .t i{display:block;height:100%;border-radius:6px;background:#5A5A63}
+.vf.last .t i{background:var(--grad);box-shadow:0 0 14px var(--a1)}
+.vf .v{font-family:var(--f-mono);font-size:12px;text-align:right;color:var(--fg)}
+.ads-aud{grid-template-columns:1.2fr 1fr 1.2fr}
+@media (max-width:1000px){.ads-aud{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.ads-aud{grid-template-columns:1fr}}
+.gfun{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.gf{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:14px;align-items:center}
+.gf-b{height:42px;border-radius:12px;display:flex;align-items:center;padding:0 14px;background:linear-gradient(90deg,color-mix(in oklab,var(--a1) 30%,var(--surface-3)),var(--surface-3));min-width:84px}
+.gf:last-child .gf-b{background:var(--grad);box-shadow:0 0 22px -4px var(--a1)}
+.gf-b .v{font:500 18px/1 var(--f-body);color:#fff}
+.gf-l{display:flex;flex-direction:column;gap:2px}
+.gf-l b{font-weight:500;font-size:13px}
+.gf-l span{font-size:11.5px;color:var(--fg-3)}
+@media (max-width:520px){.gf{grid-template-columns:1fr}.kvl li{grid-template-columns:minmax(0,1fr) auto auto}.kvl .p{display:none}}
+
+
+/* ---------- visão geral v2 + widescreen ---------- */
+.acc .mini{gap:20px 16px}
+.mm{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mm-v{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.mm-v .delta{flex:none}
+.acc{container-type:inline-size}
+@container (max-width:440px){.mm-v{flex-direction:column;align-items:flex-start}}
+.acc .mini .l{font-size:12px}
+.prio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:16px}
+.pr{display:flex;flex-direction:column;gap:8px;padding:4px 22px 6px;border-left:1px solid var(--line)}
+.pr:first-child{border-left:0;padding-left:0}
+.pr:last-child{padding-right:0}
+.pr-h{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.pr-h b{font-weight:500;font-size:13.5px}
+.pr-h span:last-child{margin-left:auto;font:400 11px/1 var(--f-mono);color:var(--fg-3)}
+.pr h4{font:500 16px/1.3 var(--f-display);letter-spacing:-.01em}
+.pr p{font-size:13px;color:var(--fg-2)}
+@media (max-width:900px){.prio{grid-template-columns:1fr;gap:18px}.pr{border-left:0;padding:0 0 18px;border-bottom:1px solid var(--line)}.pr:last-child{border-bottom:0;padding-bottom:0}}
+@media (min-width:1500px){
+  .wrap,.hero-in,.subnav-in{max-width:1560px}
+  .wrap,.hero-in{padding-inline:56px}
+  .subnav-in{padding-inline:56px}
+  .sec{padding-top:72px}
+  .sec-h{max-width:44ch}
+  .sec-lede{max-width:92ch}
+  .hero h1{max-width:24ch;font-size:56px}
+  .hero .lede{max-width:84ch;font-size:16px}
+  .hero-more{max-width:84ch}
+  .card{padding:26px}
+  .kpi .k-v{font-size:38px}
+  .acc .mini .v{font-size:26px}
+  .grid,.hl,.camps,.podium,.actions,.recs,.hlist{gap:16px}
+  .card-sub{max-width:80ch}
+  .foot-note{max-width:110ch}
+}
+@media (min-width:2200px){.wrap,.hero-in,.subnav-in{max-width:1760px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Relatórios">
+    <div class="side-brand"><img src="img/master-logo.png" alt="Grupo Master"><span>Relatórios</span></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot" id="sideFoot"></div>
+  </aside>
+  <main class="main">
+    <nav class="mnav" id="mnav" aria-label="Relatórios"></nav>
+    <div id="view"></div>
+  </main>
+</div>
+<div class="tip" id="tip" role="status"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============================================================
+   DADOS — cada relatório novo entra aqui, por seção e por mês.
+   ============================================================ */
+const PRATIQUE_2026_09 = {
+  label:"Setembro 2026", prevShort:"Ago",
+  range:"01/09 a 01/10/2026", prevRange:"01/08 a 31/08/2026",
+  source:"Windsor.ai · conector Instagram · @pratique.ofc · extraído em 05/10/2026",
+  pdf:{path:"pdfs/pratique-instagram-2026-09.pdf", name:"Pratique - Redes sociais - Setembro 2026.pdf"},
+  summary:[{v:"346",l:"seguidores",d:"+38",dir:"up"},{v:"1.444",l:"alcance médio por post",d:"+13,5%",dir:"up"},{v:"8",l:"publicações no feed",d:"+33%",dir:"up"},{v:"0,43%",l:"taxa de salvamento",d:"+54%",dir:"up"}],
+  title:'Setembro: mais conteúdo, <em>mais alcance por post</em> e +38 seguidores',
+  lede:"Publicamos 8 posts, contra 6 em agosto. Sem contar o viral de agosto, cada post de setembro alcançou em média 13,5% mais pessoas.",
+  ledeMore:"O alcance total do mês ficou abaixo de agosto porque agosto teve um Reel viral fora da curva: 29.033 pessoas, 82% de todo o alcance dos posts daquele mês. Setembro não teve um viral desse tamanho. O padrão que gera esse tipo de resultado já foi identificado e está no plano de outubro.",
+  highlights:[
+    {v:"+33%", l:"mais publicações", dir:"up", s:"8 posts contra 6"},
+    {v:"+13,5%", l:"alcance médio por post", dir:"up", s:"1.444 contra 1.272, sem o viral"},
+    {v:"+38", l:"novos seguidores", dir:"up", s:"de 05/09 a 01/10"},
+    {v:"+54%", l:"taxa de salvamento", dir:"up", s:"0,43% do alcance contra 0,28%"}
+  ],
+  viral:{aug:{viral:29033, rest:6361, restPosts:5}, sep:{total:11551, posts:8}},
+  kpis:[
+    {l:"Alcance da conta", p:33007, c:14716, d:"−55,4%", dir:"down"},
+    {l:"Visualizações", p:51085, c:23386, d:"−54,2%", dir:"down"},
+    {l:"Contas engajadas", p:1422, c:533, d:"−62,5%", dir:"down"},
+    {l:"Interações", p:2146, c:717, d:"−66,6%", dir:"down"}
+  ],
+  kpiNote:"Os números de agosto incluem o Reel viral de 10/08. Comparar o total do mês com esse pico distorce a leitura; por isso a medida principal é o alcance médio por post.",
+  readNotes:[
+    "O Reel de 30/09 (7.189 de alcance) foi publicado no último dia e continuou rendendo em outubro: 3.110 pessoas só em 01/10. Esse resultado vai entrar no relatório de outubro.",
+    "A Meta descontinuou “impressões” na API. O número equivalente usado aqui é “visualizações”.",
+    "O alcance da conta é a soma do alcance diário, então a mesma pessoa vista em dois dias conta duas vezes. Serve para comparar meses, não como total de pessoas."
+  ],
+  posts:[
+    {t:"Instrutores Master", f:"Carrossel", d:"01/09", reach:1033, rate:7.9},
+    {t:"Código Q", f:"Carrossel", d:"11/09", reach:72, rate:19.4},
+    {t:"Fotos de treinamento", f:"Carrossel", d:"16/09", reach:165, rate:13.3},
+    {t:"Extintor de água", f:"Reels", d:"18/09", reach:630, rate:null},
+    {t:"Água no óleo", f:"Reels", d:"23/09", reach:1571, rate:null},
+    {t:"Roupa de aproximação", f:"Reels", d:"28/09", reach:223, rate:10.8},
+    {t:"Extintor de pó químico", f:"Reels", d:"29/09", reach:668, rate:8.5},
+    {t:"Erro de mira com extintor", f:"Reels", d:"30/09", reach:7189, rate:1.2}
+  ],
+  growth:{
+    before:308, beforeLabel:"Início de setembro (05/09)", beforeNote:"estimado: seguidores atuais menos os novos do período",
+    after:346, afterLabel:"Hoje (05/10)", newF:38, pct:"+12%",
+    lede:"A base cresceu cerca de 12% no mês. Os picos de seguidores vieram nos dias de Reel forte.",
+    peaks:[
+      {v:"18/09", l:"8 novos seguidores", s:"dia do Reel do extintor de água"},
+      {v:"29 e 30/09", l:"7 novos seguidores", s:"Reels de pó químico e erro com extintor"},
+      {v:"01/09", l:"10 seguidores vindos de um post", s:"carrossel Instrutores Master"}
+    ],
+    gender:[{l:"Masculino",v:63},{l:"Feminino",v:32},{l:"Não informado",v:5}],
+    age:[{l:"35 a 44 anos",v:38},{l:"25 a 34 anos",v:37}],
+    states:[{l:"Rio de Janeiro",v:169},{l:"Pernambuco",v:33},{l:"Bahia",v:14},{l:"Alagoas",v:7}],
+    city:{l:"Petrópolis",v:83,pct:"24% da base"},
+    more:[
+      "A API só informa novos seguidores por dia dos últimos 30 dias, então não há como comparar o ritmo de crescimento com agosto.",
+      "A API não informa quem deixou de seguir: os 38 são ganho bruto.",
+      "Ponto a checar: Pernambuco aparece com 33 seguidores, mas não está na lista de praças de atuação. Paraíba, Paraná e Ceará quase não aparecem (Curitiba 3, Fortaleza 2)."
+    ]
+  },
+  engagement:{
+    lede:"O público está salvando mais o nosso conteúdo",
+    save:{v:"0,43%", l:"do alcance salvou algum post", p:"0,28% em agosto", d:"+54%"},
+    tiles:[
+      {v:"9,0%", l:"taxa média de engajamento por post", d:"+3,5 p.p.", dir:"up", s:"5,5% em agosto"},
+      {v:"63", l:"salvamentos", d:"−33%", dir:"down", s:"94 em agosto"},
+      {v:"74", l:"compartilhamentos", d:"−79%", dir:"down", s:"358 em agosto"},
+      {v:"15", l:"comentários", d:"−91%", dir:"down", s:"162 em agosto"}
+    ],
+    why:"Comentários e compartilhamentos de agosto foram puxados pelo Reel viral. Em proporção ao alcance, setembro teve mais salvamentos e uma taxa média por post maior.",
+    formula:"Taxa de engajamento = (curtidas + comentários + salvamentos + compartilhamentos) ÷ alcance do post. A taxa ponderada (engajamento total ÷ alcance total) foi de 5,4% para 3,4%, porque o post de maior alcance do mês (30/09) teve taxa de 1,2%, comum em Reels que chegam a muita gente nova.",
+    formats:[
+      {f:"Reels", prev:{posts:3,reach:11130,rate:5.5}, cur:{posts:5,reach:2056,rate:2.6}},
+      {f:"Carrossel", prev:{posts:3,reach:668,rate:4.8}, cur:{posts:3,reach:423,rate:9.3}}
+    ],
+    roles:[
+      {b:"Reels",t:"trazem alcance e gente nova. Em 30/09, 98% do alcance veio de quem ainda não segue a Pratique."},
+      {b:"Carrossel",t:"traz seguidores e salvamentos. Foi o formato com maior taxa em setembro (9,3%)."}
+    ]
+  },
+  top:[
+    {t:"Erro de mira com extintor",f:"Reels",d:"30/09",v:"7.189",vl:"pessoas alcançadas",h:"Cena real de erro com fogo. Cerca de 80% do vídeo assistido em média.",url:"https://www.instagram.com/reel/Dd6m2yxDbZZ/"},
+    {t:"Água no óleo",f:"Reels",d:"23/09",v:"1.571",vl:"pessoas alcançadas",h:"Gancho de suspense: “Ele não deveria ter feito isso...”",url:"https://www.instagram.com/reel/DdpUp12z3U0/"},
+    {t:"Instrutores Master",f:"Carrossel",d:"01/09",v:"1.033",vl:"pessoas alcançadas",h:"Convite direto a instrutores. Trouxe 10 seguidores e 14 compartilhamentos.",url:"https://www.instagram.com/p/Dcv7vLPlkQj/"}
+  ],
+  topMore:[
+    {t:"Extintor de pó químico",f:"Reels",d:"29/09",reach:"668",rate:"8,5%",h:"Maior taxa de salvamento entre os Reels (1,65%)",url:"https://www.instagram.com/reel/Dd30UdsDa9A/"},
+    {t:"Extintor de água",f:"Reels",d:"18/09",reach:"630",rate:"—",h:"Coincide com o melhor dia de seguidores (8 novos)",url:"https://www.instagram.com/reel/DdbcKobhRMO/"},
+    {t:"Código Q",f:"Carrossel",d:"11/09",reach:"72",rate:"19,4%",h:"Maior taxa do mês, mas para poucas pessoas",url:"https://www.instagram.com/p/DdKDTcXFpiE/"},
+    {t:"Fotos de treinamento",f:"Carrossel",d:"16/09",reach:"165",rate:"13,3%",h:"Bastidor com alunos, engaja quem já conhece a Pratique",url:"https://www.instagram.com/p/DdXGFQulrRU/"},
+    {t:"Roupa de aproximação",f:"Reels",d:"28/09",reach:"223",rate:"10,8%",h:"Engajou seguidores; 59% pularam nos 3 primeiros segundos",url:"https://www.instagram.com/reel/Dd1QMH1CnIt/"}
+  ],
+  base:"Três posts (Código Q, Fotos de treinamento e Roupa de aproximação) tiveram as maiores taxas de engajamento, mas alcançaram menos de 250 pessoas. Eles mantêm a base ativa. Para crescer, o conteúdo precisa abrir com uma cena de risco, que é o que leva o post para fora da base.",
+  hook:{
+    lede:"Prender nos 3 primeiros segundos é o que leva um Reel longe",
+    a:{l:"Reels que prenderam a atenção logo no início", s:"3 Reels com menos de 36% de pulo", total:37793, n:3},
+    b:{l:"Demais Reels", s:"5 Reels com 50% a 73% de pulo", total:5879, n:5},
+    reels:[
+      {t:"Instrutor erra extintor",d:"10/08",skip:"22,6%",reach:"29.033"},
+      {t:"Erro de mira com extintor",d:"30/09",skip:"33,8%",reach:"7.189"},
+      {t:"Água no óleo",d:"23/09",skip:"35,0%",reach:"1.571"},
+      {t:"Backdraft",d:"30/08",skip:"52,0%",reach:"3.666"},
+      {t:"Pó químico",d:"29/09",skip:"50,4%",reach:"668"},
+      {t:"Roupa de aproximação",d:"28/09",skip:"59,1%",reach:"223"},
+      {t:"Extintor de água",d:"18/09",skip:"61,0%",reach:"630"},
+      {t:"NR-33 espaço confinado",d:"04/08",skip:"73,4%",reach:"692"}
+    ],
+    hours:"10 dos 14 posts de agosto e setembro saíram entre 9h30 e 12h. Ainda não há dados para afirmar o melhor horário; por isso o horário entra como teste no plano de outubro."
+  },
+  plan:{
+    working:[
+      "Reels com cena real de erro diante do fogo geram os maiores alcances.",
+      "Conteúdo técnico útil: salvamentos subiram 54%.",
+      "Carrosséis com oportunidade concreta (vaga, banco de instrutores) trazem seguidores."
+    ],
+    attention:[
+      {b:"Alcance ainda depende de viral",a:"Série semanal de Reels “erro real” para gerar picos com frequência."},
+      {b:"Reels educativos perdem metade do público no início",a:"Abrir pela consequência (o fogo, o erro) e explicar depois."},
+      {b:"Conversão em pré-inscrição ainda não é medida",a:"Link rastreável na bio e botão de contato ativo no perfil."}
+    ],
+    actions:[
+      {t:"Série semanal de Reels “erro real”",b:"Um por semana, abrindo na cena do erro, com gancho de suspense.",w:"Os 3 Reels que prenderam no início somaram 37.793 de alcance, contra 5.879 dos outros 5 juntos."},
+      {t:"Nova abertura para os Reels educativos",b:"Começar pela consequência e só depois explicar. Meta: pulo perto de 35%.",w:"Cinco dos oito Reels de agosto e setembro perderam mais da metade do público nos 3 primeiros segundos."},
+      {t:"Um carrossel técnico por semana",b:"Com dado numérico na capa e conteúdo para consulta.",w:"Salvamentos subiram 54%, e o carrossel é o formato que traz seguidor mensurável por post."},
+      {t:"Medir pré-inscrições vindas do Instagram",b:"Link rastreável na bio (UTM ou formulário) e botão de contato no perfil.",w:"Hoje não há dado de cliques na bio nem de toques no botão de contato, então não dá para provar quantos alunos vêm do Instagram."},
+      {t:"Teste de horário",b:"Por 4 semanas, o mesmo formato às 12h e às 19h.",w:"Quase todos os posts saíram no mesmo horário, então ainda não há base para escolher o melhor."}
+    ]
+  }
+};
+
+const MARKETING_2026_09 = {
+  label:"Setembro 2026", range:"Setembro 2026",
+  source:"Pasta Criativos/2026/Setembro e solicitações do Humand · levantamento de 05/10/2026",
+  pdf:{path:"pdfs/marketing-global-2026-09.pdf", name:"Marketing global - Setembro 2026.pdf"},
+  title:'Setembro: <em>45 demandas</em> e 152 peças entregues',
+  lede:"Criação para as quatro frentes do Grupo Master (Master, Impacto, Pratique e LinkedIn), 5 captações em campo e o painel do site da Impacto no ar.",
+  ledeMore:"O Humand mostra só uma parte do volume real: 38 das 45 demandas vieram do calendário editorial e de pedidos diretos. Das 10 solicitações abertas no Humand, 9 foram concluídas e 1 aguarda definição de quem pediu.",
+  highlights:[
+    {v:"45", l:"demandas entregues", s:"para 4 frentes"},
+    {v:"152", l:"peças finais", s:"posts, stories, cards, vídeos e impressos"},
+    {v:"18", l:"vídeos e reels editados", s:"incluindo 2 formatos virais para a Impacto"},
+    {v:"5", l:"captações em campo", s:"foto e vídeo"}
+  ],
+  brands:[
+    {b:"Master", brand:"master", logo:"img/master-symbol.png", d:24, p:102, v:6, main:"9 campanhas de vagas, 23 fotos de perfil e 23 crachás, Setembro Amarelo, 6 vídeos para o telão da loja"},
+    {b:"Impacto Fire", brand:"impacto", logo:"img/impacto-flame.png", d:10, p:28, v:6, main:"Carrosséis 5 Sinais, Bola Extintora, Porta Corta-Fogo e Sinalização com capas animadas, 4 reels"},
+    {b:"Pratique", brand:"pratique", logo:"img/pratique-q.png", d:8, p:18, v:6, main:"Carrosséis NR e Código Q, 6 reels (extintores, backdraft, roupa de aproximação)"},
+    {b:"LinkedIn", brand:"linkedin", logo:null, d:3, p:4, v:0, main:"Grupo Master Brasil, Pessoas e Projetos, Soldador"}
+  ],
+  types:[
+    {t:"Educativo", d:17, p:48},
+    {t:"Recrutamento", d:9, p:22},
+    {t:"Datas e institucional", d:9, p:23},
+    {t:"Comunicação interna", d:8, p:52},
+    {t:"Loja", d:2, p:7}
+  ],
+  typesNote:"Comunicação interna teve poucas demandas, mas o maior número de peças (52), por causa das 46 fotos de perfil e crachá.",
+  origin:{humand:7, direct:38},
+  humand:{
+    done:9, total:10, emerg:"2 de 2", emergNote:"as duas emergências de 11/09 (prazo de 2 h) saíram em cerca de 1h30 cada",
+    note:"Artes com data de lançamento ficaram prontas antes dela. Horários de entrega estimados pela data dos arquivos finais.",
+    rows:[
+      ["#SR856","Arte mensal: assinatura do espelho de ponto","Taiza Esteves","11/09","Baixa (7 dias)","05/10","Concluída"],
+      ["#SR855","Vaga Copeira","Gisele Emmel","11/09 10:18","Emergência (2 h)","11/09 11:30","Concluída"],
+      ["#SR852","Vaga Suporte de TI","Gisele Emmel","11/09 09:49","Emergência (2 h)","11/09 11:18","Concluída"],
+      ["#SR849","Aviso de mudança no uso da Flash","Taiza Esteves","10/09","Baixa (7 dias)","15/09","Concluída"],
+      ["#SR831","Vaga Serviços Gerais","Gisele Emmel","06/09 (domingo)","Urgente (1 dia)","08/09","Concluída"],
+      ["#SR823","Treinamentos na área de Aprendizagem","Natã Felipe","04/09","Alta (3 dias)","08/09","Concluída"],
+      ["#SR822","Wallpapers Master","Bernardo Morada","04/09","Baixa (7 dias)","—","Em espera"],
+      ["#SR813","Carrossel Código Q (6 lâminas)","Natã Felipe","02/09","Baixa (7 dias)","11/09","Concluída"],
+      ["#SR796","Vaga Técnico Químico","Arthur (Marketing)","27/08","Urgente (1 dia)","31/08","Concluída"],
+      ["#SR756","Vídeos para o painel de LED e TV da loja","Arthur (Marketing)","14/08","Média (5 dias)","09/09 (prazo renegociado)","Concluída"]
+    ]
+  },
+  shoots:[
+    {t:"Loja", f:"Foto e vídeo", u:"Reels da loja Impacto e conteúdo de produtos"},
+    {t:"Entrega de extintores", f:"Foto", u:"Registro de serviço para redes e institucional"},
+    {t:"Treinamento no CT da Pratique", d:"12/09", f:"Foto e vídeo", u:"Conteúdo de treinamento para a Pratique"},
+    {t:"Fechamento de turma no CT da Top Fire", d:"28/09", f:"Foto e vídeo", u:"Registro do encerramento da turma"},
+    {t:"Colaboradores", f:"Foto", u:"Base para as 23 fotos de perfil e 23 crachás"}
+  ],
+  site:{lede:"Com o painel, a equipe atualiza o catálogo sem depender de desenvolvimento.", steps:[{t:"Implantação do sistema administrativo",s:"Concluída",done:true},{t:"Cadastro de produtos",s:"Em andamento",done:false}]},
+  highlightsList:[
+    {b:"Padronização da equipe",t:"23 fotos de perfil (WhatsApp) e 23 crachás com o mesmo tratamento visual."},
+    {b:"Recrutamento",t:"9 campanhas de vagas, com versões para feed, story e anúncio."},
+    {b:"Loja",t:"6 vídeos para o telão de LED e reels da loja Impacto."},
+    {b:"Vídeo",t:"18 vídeos e reels, incluindo dois formatos virais para a Impacto e capas animadas nos carrosséis."},
+    {b:"Datas e campanhas",t:"Setembro Amarelo, 7 de Setembro, aniversário de São Luís, Dia do Cliente e 12 mil seguidores."},
+    {b:"Comunicação interna",t:"Comunicado Flash, Aprendizagem no Humand, vale-alimentação, capas de formulários e adesivo para banheiro."}
+  ],
+  listNote:"Datas pela data dos arquivos finais. Algumas peças de setembro foram produzidas no fim de agosto.",
+  list:[
+    ["Master","Vale-alimentação","Comunicação interna",1,"Arte","","25/08"],
+    ["Master","Vaga Bombeiro Civil RJ","Recrutamento",2,"Feed + story","","26/08"],
+    ["Master","Vagas Bombeiro Civil MA e CE","Recrutamento",4,"Feed + story","","26/08"],
+    ["Master","AVCB e CLCB: diferenças","Educativo",5,"Carrossel","","28/08"],
+    ["Master","Capa formulário de contratação","Comunicação interna",1,"Capa","","28/08"],
+    ["Master","Capa formulário de instrutor","Comunicação interna",1,"Capa","","28/08"],
+    ["Master","Fotos de perfil (WhatsApp)","Comunicação interna",23,"Foto tratada","","27/08 a 05/10"],
+    ["Master","Fotos de crachá","Comunicação interna",23,"Foto tratada","","02/09 a 05/10"],
+    ["Master","12 mil seguidores","Datas e institucional",1,"Feed","","31/08"],
+    ["Master","Vaga Técnico Químico","Recrutamento",2,"Feed + story","#SR796","31/08"],
+    ["Master","Perfil do Canal de Vagas","Recrutamento",1,"Foto de perfil","","31/08"],
+    ["Master","Vaga Supervisor Operacional RJ","Recrutamento",2,"Feed + story","","02/09"],
+    ["Master","Canal de Vagas","Recrutamento",4,"Feed + story, orgânico e anúncio","","02/09"],
+    ["Master","Setembro Amarelo","Datas e institucional",10,"Feed, story, 2 carrosséis, versão Humand","","04/09 a 09/09"],
+    ["Master","7 de Setembro","Datas e institucional",2,"Feed + story","","05/09"],
+    ["Master","Treinamentos na Aprendizagem Humand","Comunicação interna",1,"Mural Humand","#SR823","08/09"],
+    ["Master","Parabéns São Luís","Datas e institucional",2,"Feed + story","","08/09"],
+    ["Master","Vaga Serviços Gerais (Petrópolis)","Recrutamento",2,"Feed","#SR831","08/09"],
+    ["Master","Telão da loja","Loja",6,"Vídeo","#SR756","09/09 a 30/09"],
+    ["Master","Vagas Copeira e Estágio de TI","Recrutamento",4,"Feed + story","#SR852, #SR855","11/09"],
+    ["Master","Vagas Abertas","Recrutamento",1,"Arte","","11/09"],
+    ["Master","Comunicado Flash","Comunicação interna",1,"Mural Humand","#SR849","15/09"],
+    ["Master","Dia do Cliente","Datas e institucional",2,"Feed + story","","15/09"],
+    ["Master","Adesivo para banheiro","Comunicação interna",1,"Impresso","","17/09"],
+    ["Impacto","5 Sinais","Educativo",7,"Carrossel","","26/08"],
+    ["Impacto","Reels Extintor de Água","Educativo",1,"Reels","","27/08"],
+    ["Impacto","Bola Extintora","Educativo",4,"Carrossel","","28/08"],
+    ["Impacto","Porta Corta-Fogo","Educativo",3,"Carrossel com capa animada","","09/09 a 16/09"],
+    ["Impacto","Reels da loja","Loja",1,"Reels","","15/09"],
+    ["Impacto","Dia do Cliente","Datas e institucional",2,"Feed + story","","15/09"],
+    ["Impacto","Reels viral: incêndio industrial","Educativo",1,"Reels","","21/09"],
+    ["Impacto","Reels viral: cachorro e bateria","Educativo",1,"Reels","","21/09"],
+    ["Impacto","Sala em chamas","Educativo",2,"Feed + story","","24/09"],
+    ["Impacto","Sinalização de emergência","Educativo",6,"Carrossel com capa animada","","24/09"],
+    ["Pratique","Carrossel NR","Educativo",6,"Carrossel","","27/08"],
+    ["Pratique","Backdraft (Henrique)","Educativo",1,"Reels","","27/08"],
+    ["Pratique","Código Q, números e alfabeto","Educativo",6,"Carrossel","#SR813","11/09"],
+    ["Pratique","Reels extintor de água","Educativo",1,"Reels","","17/09"],
+    ["Pratique","Reels uso errado do extintor","Educativo",1,"Reels","","21/09"],
+    ["Pratique","Reels água no óleo","Educativo",1,"Reels","","21/09"],
+    ["Pratique","Roupa de aproximação","Educativo",1,"Reels","","24/09"],
+    ["Pratique","Reels extintor de pó químico","Educativo",1,"Reels","","24/09"],
+    ["LinkedIn","Grupo Master Brasil","Datas e institucional",2,"Post","","09/09 a 11/09"],
+    ["LinkedIn","Soldador","Datas e institucional",1,"Post","","21/09"],
+    ["LinkedIn","Pessoas e Projetos","Datas e institucional",1,"Post","","24/09"]
+  ]
+};
+
+const IMPACTO_2026_09 = {
+  variant:"meta",
+  label:"Setembro 2026", prevShort:"Ago",
+  range:"01/09 a 01/10/2026", prevRange:"01/08 a 31/08/2026",
+  source:"Meta Business Suite · Insights do Instagram @impacto.fire e da Página Impacto Fire · extraído em 06/10/2026",
+  pdf:{path:"pdfs/impacto-redes-2026-09.pdf", name:"Impacto Fire - Redes sociais - Setembro 2026.pdf"},
+  summary:[{v:"393",l:"seguidores",d:"+164",dir:"up"},{v:"179",l:"novos seguidores",d:"+28,8%",dir:"up"},{v:"6,7%",l:"taxa de interação",d:"2,3% em ago",dir:"up"},{v:"1.741",l:"cliques no link",d:"+7,8%",dir:"up"}],
+  title:'Setembro: <em>+179 seguidores</em> e taxa de interação quase 3x maior',
+  lede:"Mais seguidores novos que em agosto (+28,8%), um Reel viral com 102 mil visualizações e um público que interagiu quase três vezes mais.",
+  ledeMore:"As visualizações totais ficaram abaixo de agosto porque agosto foi um mês fora da curva: dois Reels viralizaram (bateria de lítio em 01/08 e sprinkler em 12/08), e só os quatro dias de pico desses virais somaram 77% das visualizações do mês. Setembro teve um viral, menor, e os dias fora dos picos ficaram em patamar parecido.",
+  highlights:[
+    {v:"+28,8%", l:"novos seguidores", dir:"up", s:"179 contra 139 em agosto"},
+    {v:"6,7%", l:"taxa de interação", dir:"up", s:"2,3% em agosto (interações ÷ alcance)"},
+    {v:"+7,8%", l:"cliques no link", dir:"up", s:"1.741 contra 1.615"},
+    {v:"+38,5%", l:"conteúdos publicados", dir:"up", s:"18 contra 13 (posts e stories)"}
+  ],
+  views:{
+    aug:{viral:383458, rest:112795, total:496253, vl:"4 dias de pico de dois virais"},
+    sep:{viral:93682, rest:95708, total:189390, vl:"2 dias de pico do viral"}
+  },
+  kpis:[
+    {l:"Visualizações no Instagram", p:496253, c:189390, d:"−61,8%", dir:"down"},
+    {l:"Contas alcançadas", p:318847, c:102244, d:"−67,9%", dir:"down"},
+    {l:"Interações com o conteúdo", p:7239, c:6837, d:"−5,6%", dir:"down"},
+    {l:"Visitas ao perfil", p:2391, c:2162, d:"−9,6%", dir:"down"}
+  ],
+  kpiNote:"Mesmo com um terço do alcance de agosto, as interações ficaram praticamente no mesmo patamar (−5,6%). O público alcançado em setembro interagiu muito mais.",
+  readNotes:[
+    "Agosto foi um mês fora da curva: as visualizações no Instagram foram mais de 15 vezes as de julho, puxadas pelos virais da bateria de lítio e do sprinkler (este com 1,4 milhão de visualizações acumuladas).",
+    "Visualizações por post são acumuladas até 06/10. O Reel de 30/09 (cachorro e bateria) foi publicado no último dia e ainda está rendendo.",
+    "Alcance é o número de contas únicas alcançadas no período, informado pela Meta."
+  ],
+  postsSub:"O Reel de 21/09 foi o viral do mês.",
+  posts:[
+    {t:"Dia do Cliente", f:"Foto", d:"15/09", reach:95, rate:null},
+    {t:"Porta corta-fogo", f:"Carrossel", d:"16/09", reach:119, rate:null},
+    {t:"Conheça a loja", f:"Carrossel", d:"17/09", reach:168, rate:null},
+    {t:"Atendimento na loja", f:"Reels", d:"19/09", reach:394, rate:null},
+    {t:"Incêndio industrial", f:"Reels", d:"21/09", reach:102086, rate:null},
+    {t:"Luz de emergência", f:"Carrossel", d:"24/09", reach:117, rate:null},
+    {t:"Duas versões da mesma sala", f:"Foto", d:"28/09", reach:1583, rate:null},
+    {t:"Entregas do dia", f:"Carrossel", d:"29/09", reach:5531, rate:null},
+    {t:"Cachorro e bateria", f:"Reels", d:"30/09", reach:251, rate:null}
+  ],
+  growth:{
+    h:"179 novos seguidores, 28,8% a mais que em agosto",
+    before:229, beforeLabel:"Início de setembro", beforeNote:"estimado: total atual menos o saldo do mês",
+    after:393, afterLabel:"Hoje (05/10)", newF:164, pct:"+72%",
+    lede:"179 novos seguidores e 15 saídas: saldo de +164 no mês. O maior pico veio com o Reel viral.",
+    peaks:[
+      {v:"21 e 22/09", l:"105 novos seguidores", s:"dias do Reel viral do incêndio industrial, que pedia para seguir a conta"},
+      {v:"Setembro", l:"179 novos seguidores", d:"+28,8%", dir:"up", s:"mais que agosto, mesmo sem o tamanho dos virais de agosto"},
+      {v:"Saídas", l:"15 deixaram de seguir", d:"−15,4%", dir:"up", s:"menos saídas que em agosto"}
+    ],
+    gender:[{l:"Homens",v:77.2},{l:"Mulheres",v:22.8}],
+    age:{big:"73%", s:"têm entre 25 e 44 anos (25–34: 45% · 35–44: 28%)"},
+    city:{l:"Petrópolis",pct:"15,8% da base"},
+    cities:[{l:"Petrópolis",v:15.8},{l:"Rio de Janeiro",v:4.1},{l:"São Paulo",v:2.5},{l:"Duque de Caxias",v:2.3},{l:"Recife",v:2.0}],
+    more:[
+      "O número de seguidores no início de setembro é estimado: 393 seguidores em 05/10 menos o saldo do período (+164). Os poucos seguidores de 02 a 05/10 não foram descontados.",
+      "85,8% da base está no Brasil. Fora do país, os maiores grupos são Portugal (1%) e Paraguai (0,8%).",
+      "Público majoritariamente masculino (77%), coerente com o perfil técnico e de síndicos do conteúdo."
+    ]
+  },
+  engagement:{
+    lede:"Menos alcance, mas um público que interagiu muito mais",
+    rate:{v:"6,7%", l:"das contas alcançadas interagiram", p:"2,3% em agosto", d:"quase 3x"},
+    tiles:[
+      {v:"6.837", l:"interações com o conteúdo", d:"−5,6%", dir:"down", s:"7.239 em agosto"},
+      {v:"1.741", l:"cliques no link", d:"+7,8%", dir:"up", s:"1.615 em agosto"},
+      {v:"2.162", l:"visitas ao perfil", d:"−9,6%", dir:"down", s:"2.391 em agosto"},
+      {v:"18", l:"conteúdos publicados", d:"+38,5%", dir:"up", s:"9 posts e 9 stories"}
+    ],
+    why:"Mais pessoas clicaram no link do perfil mesmo com um terço do alcance de agosto.",
+    formula:"Taxa de interação = interações com o conteúdo ÷ contas alcançadas no período. Setembro: 6.837 ÷ 102.244. Agosto: 7.239 ÷ 318.847."
+  },
+  top:[
+    {t:"Incêndio industrial",f:"Reels",d:"21/09",v:"102 mil",vl:"visualizações",h:"Viral orgânico: 75 mil contas alcançadas, 4.404 curtidas e 287 compartilhamentos."},
+    {t:"Atendimento na loja",f:"Reels",d:"19/09",v:"394",vl:"visualizações",h:"Reel da loja: 10 curtidas e 2 compartilhamentos."},
+    {t:"Cachorro e bateria",f:"Reels",d:"30/09",v:"251",vl:"visualizações",h:"Publicado no último dia do período e ainda rendendo em outubro."}
+  ],
+  topMore:[
+    {t:"Entregas do dia",f:"Carrossel",d:"29/09",views:"5.531",reach:"3.182",h:"Post impulsionado (ver relatório de tráfego pago)"},
+    {t:"Duas versões da mesma sala",f:"Foto",d:"28/09",views:"1.583",reach:"1.098",h:"Post impulsionado (ver relatório de tráfego pago)"},
+    {t:"Conheça a loja",f:"Carrossel",d:"17/09",views:"168",reach:"58",h:"Apresentação da loja"},
+    {t:"Porta corta-fogo",f:"Carrossel",d:"16/09",views:"119",reach:"—",h:"Post cruzado com o Facebook"},
+    {t:"Luz de emergência",f:"Carrossel",d:"24/09",views:"117",reach:"—",h:"Post cruzado com o Facebook"},
+    {t:"Dia do Cliente",f:"Foto",d:"15/09",views:"95",reach:"—",h:"Post cruzado com o Facebook"}
+  ],
+  base:"O Reel do incêndio industrial seguiu o mesmo padrão dos virais de agosto (bateria de lítio e sprinkler): cena real de risco nos primeiros segundos e chamada para seguir a conta. Os posts institucionais e de loja cumprem outro papel, de presença e confiança, com alcance menor.",
+  facebook:{
+    h:"A Página seguiu o mesmo movimento", title:"Página Impacto Fire",
+    lede:"A Página do Facebook seguiu o mesmo movimento do Instagram, também comparada ao pico viral de agosto.",
+    rows:[
+      {l:"Visualizações", p:"984,4 mil", c:"308,1 mil", d:"−68,7%", dir:"down"},
+      {l:"Pessoas alcançadas (visualizadores)", p:"551,5 mil", c:"168,8 mil", d:"−69,4%", dir:"down"},
+      {l:"Interações com o conteúdo", p:"4,4 mil", c:"922", d:"−79%", dir:"down"},
+      {l:"Visitas à Página", p:"3,6 mil", c:"1,4 mil", d:"−61,6%", dir:"down"},
+      {l:"Novos seguidores", p:"403", c:"124", d:"−69,2%", dir:"down"}
+    ],
+    note:"Mesmo abaixo de agosto, setembro entregou 308 mil visualizações no Facebook, bem acima do patamar anterior aos virais."
+  },
+  plan:{
+    working:[
+      "Reels com cena real de risco viralizam: dois em agosto e um em setembro.",
+      "Chamada para seguir no Reel viral: 105 novos seguidores em dois dias.",
+      "Stories praticamente dobraram: 9 contra 5 em agosto."
+    ],
+    attention:[
+      {b:"Alcance ainda depende de viral",a:"Um Reel de risco real por semana para aumentar a chance de novos picos."},
+      {b:"Poucos Reels no mês (3 de 9 posts)",a:"Priorizar Reels no calendário de outubro."},
+      {b:"Visitas ao perfil caíram 9,6%",a:"Reforçar a chamada para o perfil e o WhatsApp na legenda e nos stories."}
+    ],
+    actions:[
+      {t:"Um Reel de risco real por semana",b:"No formato dos virais: cena de perigo nos primeiros segundos e explicação técnica na legenda.",w:"Os três maiores resultados de agosto e setembro (bateria de lítio, sprinkler e incêndio industrial) seguiram esse formato."},
+      {t:"Chamada para seguir em todo Reel",b:"Fechar a legenda com convite para seguir a conta.",w:"O Reel de 21/09 trouxe 105 seguidores em dois dias com essa chamada."},
+      {t:"Manter o ritmo de stories",b:"Seguir com a frequência de setembro, que quase dobrou a de agosto.",w:"Stories mantêm a base ativa entre um post e outro."}
+    ]
+  }
+};
+
+const MASTER_2026_09 = {
+  variant:"meta",
+  label:"Setembro 2026", prevShort:"Ago",
+  range:"01/09 a 01/10/2026", prevRange:"01/08 a 31/08/2026",
+  source:"Meta Business Suite · Insights do Instagram @_grupomaster e da Página Master Fire · extraído em 06/10/2026 · sem anúncios",
+  pdf:{path:"pdfs/grupo-master-redes-2026-09.pdf", name:"Grupo Master - Redes sociais - Setembro 2026.pdf"},
+  summary:[{v:"12.245",l:"seguidores",d:"+168",dir:"up"},{v:"75.638",l:"visualizações orgânicas",d:"+41,3%",dir:"up"},{v:"1.651",l:"interações",d:"+44,6%",dir:"up"},{v:"66",l:"conteúdos publicados",d:"+57,1%",dir:"up"}],
+  title:'Setembro: <em>+41% de visualizações orgânicas</em> e 44% mais interações',
+  lede:"Praticamente sem anúncio, o perfil foi mais visto e teve mais interação que em agosto. Ganhou seguidores todos os dias do mês e perdeu menos gente.",
+  moreLabel:"Sobre os números orgânicos",
+  ledeMore:"Este relatório considera só o resultado orgânico; anúncios ficam na seção de tráfego pago. Agosto teve uma campanha paga no fim do mês (26 a 31/08) que concentrou 73% dos novos seguidores e todos os cliques no link do mês; só o dia 29/08 teve 1.323 visitas ao perfil. Por isso, nesses três indicadores, agosto aparece acima de setembro.",
+  highlights:[
+    {v:"+41,3%", l:"visualizações orgânicas", s:"75.638 contra 53.515", dir:"up"},
+    {v:"+44,6%", l:"interações", s:"1.651 contra 1.142", dir:"up"},
+    {v:"−11,8%", l:"deixaram de seguir", s:"134 contra 152", dir:"up"},
+    {v:"+57,1%", l:"conteúdos publicados", s:"66 contra 42 (posts e stories)", dir:"up"}
+  ],
+  compare:{
+    title:"Visualizações orgânicas no Instagram",
+    sub:"Só o que veio do conteúdo publicado, sem anúncio.",
+    a:{l:"Agosto", v:53515}, b:{l:"Setembro", v:75638}, d:"+41,3%"
+  },
+  kpis:[
+    {l:"Visualizações orgânicas", p:53515, c:75638, d:"+41,3%", dir:"up"},
+    {l:"Contas alcançadas (orgânico)", p:7978, c:6792, d:"−14,9%", dir:"down"},
+    {l:"Interações com o conteúdo", p:1142, c:1651, d:"+44,6%", dir:"up"},
+    {l:"Visitas ao perfil", p:2443, c:1890, d:"−22,6%", dir:"down"}
+  ],
+  kpiNote:"As visitas ao perfil de agosto incluem 29/08, dia da campanha paga, que sozinho teve 1.323 visitas. O alcance orgânico caiu 14,9% com menos posts no feed (10 contra 14).",
+  readNotes:[
+    "Visualizações e alcance orgânicos vêm do detalhamento orgânico/anúncios da Meta. Em setembro, os anúncios no Instagram foram mínimos (3.069 visualizações).",
+    "Visualizações por post são acumuladas até 06/10.",
+    "Setembro não teve Reels no feed: os 10 posts foram fotos e carrosséis."
+  ],
+  postsSub:"Os posts de vagas lideraram. Setembro não teve Reels no feed.",
+  posts:[
+    {t:"Instrutores Master", f:"Carrossel", d:"01/09", reach:2628, rate:null},
+    {t:"Supervisor Operacional", f:"Foto", d:"02/09", reach:2304, rate:null},
+    {t:"Técnico Químico", f:"Foto", d:"02/09", reach:817, rate:null},
+    {t:"Canal de vagas no WhatsApp", f:"Foto", d:"02/09", reach:1084, rate:null},
+    {t:"7 de Setembro", f:"Foto", d:"07/09", reach:1002, rate:null},
+    {t:"Aniversário de São Luís", f:"Foto", d:"08/09", reach:508, rate:null},
+    {t:"Setembro Amarelo", f:"Carrossel", d:"09/09", reach:1030, rate:null},
+    {t:"Vagas em Petrópolis", f:"Carrossel", d:"11/09", reach:5863, rate:null},
+    {t:"Dia do Cliente", f:"Foto", d:"15/09", reach:580, rate:null},
+    {t:"Peças e estruturas", f:"Foto", d:"28/09", reach:515, rate:null}
+  ],
+  growth:{
+    h:"Seguidores novos em todos os dias do mês",
+    before:12077, beforeLabel:"Início de setembro", beforeNote:"estimado: total atual menos o saldo do mês",
+    after:12245, afterLabel:"Hoje (06/10)", newF:168, pct:"+1,4%",
+    lede:"302 novos seguidores e 134 saídas: saldo de +168. O perfil ganhou seguidores em todos os 31 dias do mês, sem depender de um pico.",
+    peaks:[
+      {v:"31 de 31", l:"dias com novos seguidores", s:"crescimento constante, de 1 a 24 por dia"},
+      {v:"Saídas", l:"134 deixaram de seguir", d:"−11,8%", dir:"up", s:"menos saídas que em agosto (152)"},
+      {v:"Novos", l:"302 novos seguidores", d:"−26,2%", dir:"down", s:"agosto teve 409, com 298 vindos da semana da campanha paga"}
+    ],
+    gender:[{l:"Homens",v:51.7},{l:"Mulheres",v:48.3}],
+    age:{big:"71%", s:"têm entre 25 e 44 anos (25–34: 35,6% · 35–44: 35,7%)"},
+    city:{l:"Petrópolis",pct:"9% da base"},
+    cities:[{l:"Petrópolis",v:9.0},{l:"Rio de Janeiro",v:5.4},{l:"Salvador",v:3.6}],
+    more:[
+      "O número do início de setembro é estimado: 12.245 seguidores hoje menos o saldo do mês (+168).",
+      "69,5% da base está no Brasil. Ponto a checar: 5,5% aparece no Quirguistão, um volume fora do esperado para o perfil.",
+      "Público equilibrado entre homens e mulheres, diferente das contas técnicas (Impacto e Pratique), por causa do conteúdo de vagas e institucional."
+    ]
+  },
+  engagement:{
+    lede:"Mais interação com menos posts no feed", rateTitle:"Interações", formulaLabel:"Como medimos",
+    rate:{v:"1.651", l:"interações com o conteúdo", p:"1.142 em agosto", d:"+44,6%"},
+    tiles:[
+      {v:"56", l:"stories publicados", d:"+100%", dir:"up", s:"28 em agosto"},
+      {v:"10", l:"posts no feed", d:"−28,6%", dir:"down", s:"14 em agosto"},
+      {v:"134", l:"deixaram de seguir", d:"−11,8%", dir:"up", s:"152 em agosto"},
+      {v:"1.890", l:"visitas ao perfil", d:"−22,6%", dir:"down", s:"2.443 em agosto"}
+    ],
+    why:"Os stories dobraram e sustentaram a interação mesmo com menos posts no feed.",
+    formula:"Interações = curtidas, comentários, compartilhamentos e salvamentos no período. Visualizações e alcance desta seção consideram só o orgânico."
+  },
+  top:[
+    {t:"Vagas em Petrópolis",f:"Carrossel",d:"11/09",v:"5.863",vl:"visualizações",h:"Post mais visto do mês: 59 curtidas e 31 compartilhamentos, gente marcando gente."},
+    {t:"Instrutores Master",f:"Carrossel",d:"01/09",v:"2.628",vl:"visualizações",h:"Convite a instrutores: 1.026 contas alcançadas, 60 curtidas e 14 compartilhamentos."},
+    {t:"Supervisor Operacional",f:"Foto",d:"02/09",v:"2.304",vl:"visualizações",h:"Vaga com prazo curto: 31 curtidas e 9 compartilhamentos."}
+  ],
+  topMore:[
+    {t:"Canal de vagas no WhatsApp",f:"Foto",d:"02/09",views:"1.084",reach:"577",h:"Divulgação do canal de vagas"},
+    {t:"Setembro Amarelo",f:"Carrossel",d:"09/09",views:"1.030",reach:"504",h:"Campanha de saúde mental"},
+    {t:"7 de Setembro",f:"Foto",d:"07/09",views:"1.002",reach:"635",h:"Data comemorativa, 15 curtidas e 7 compartilhamentos"},
+    {t:"Técnico Químico",f:"Foto",d:"02/09",views:"817",reach:"441",h:"Vaga"},
+    {t:"Dia do Cliente",f:"Foto",d:"15/09",views:"580",reach:"—",h:"Post cruzado com o Facebook"},
+    {t:"Peças e estruturas",f:"Foto",d:"28/09",views:"515",reach:"263",h:"Bastidor da operação, 18 curtidas"},
+    {t:"Aniversário de São Luís",f:"Foto",d:"08/09",views:"508",reach:"—",h:"Post cruzado com o Facebook"}
+  ],
+  base:"Os três posts mais vistos são de recrutamento. Conteúdo de vaga é o que mais circula no perfil: as pessoas compartilham e marcam conhecidos, o que leva o post para fora da base de seguidores.",
+  facebook:{
+    h:"Facebook: mais visualizações orgânicas", title:"Página Master Fire",
+    lede:"A Página do Facebook é um canal secundário, mas cresceu no orgânico.",
+    rows:[
+      {l:"Visualizações orgânicas", p:"2.057", c:"3.107", d:"+51%", dir:"up"}
+    ],
+    note:"Os demais números da Página em setembro foram puxados por anúncio e ficam na seção de tráfego pago."
+  },
+  plan:{
+    working:[
+      "Conteúdo de vagas: os três posts mais vistos do mês.",
+      "Stories dobraram (56 contra 28) e sustentaram a interação.",
+      "Crescimento de seguidores constante, todos os dias do mês."
+    ],
+    attention:[
+      {b:"Nenhum Reel em setembro",a:"Voltar a publicar Reels, começando pelas vagas e bastidores da operação."},
+      {b:"Alcance orgânico caiu 14,9%",a:"Recuperar o volume de posts no feed (de 10 para pelo menos 14)."},
+      {b:"Visitas ao perfil caíram 22,6%",a:"Chamada para o perfil e para o canal de vagas em todo post de recrutamento."}
+    ],
+    actions:[
+      {t:"Reels de vagas e bastidores",b:"Transformar as vagas e a rotina das equipes em vídeos curtos.",w:"Setembro não teve nenhum Reel, e vaga é o tema que mais circula no perfil."},
+      {t:"Voltar a 14 posts no feed",b:"Manter a frequência de agosto no feed sem perder o ritmo dos stories.",w:"O alcance orgânico caiu no mesmo mês em que os posts no feed diminuíram (10 contra 14)."},
+      {t:"Pedir compartilhamento nas vagas",b:"Fechar posts de vaga com “marque quem precisa ver”.",w:"O post de Petrópolis teve 31 compartilhamentos e foi o mais visto do mês."}
+    ]
+  }
+};
+
+const ADS_2026_09 = {
+  label:"Setembro 2026", prevShort:"Ago",
+  range:"01/09 a 30/09/2026", prevRange:"01/08 a 31/08/2026",
+  pdf:{path:"pdfs/trafego-pago-2026-09.pdf", name:"Impacto Fire - Tráfego pago - Setembro 2026.pdf"},
+  summary:[{v:"R$ 1.572",l:"investidos em Meta e Google"},{v:"17",l:"ligações pelo Google"},{v:"1.659",l:"visitas ao perfil no Instagram"},{v:"1.291",l:"cliques no canal de vagas"}],
+  title:"Primeiro mês com <em>Meta e Google</em> rodando juntos",
+  lede:"R$ 1.572,42 investidos nas duas plataformas. O Google trouxe 17 ligações e 13 rotas até a empresa. No Meta, o Instagram manteve a verba de agosto e trouxe 1.659 visitas ao perfil a R$ 0,34 cada, e a campanha nova de vagas levou 1.291 candidatos ao canal da Master Fire.",
+  ledeMore:"Em agosto o Google rodou só 4 dias (28 a 31/08), então os percentuais de crescimento dele medem, antes de tudo, 30 dias contra 4. Setembro passa a ser a régua: outubro será a primeira comparação mês cheio contra mês cheio. No Meta, a campanha do Instagram teve praticamente a mesma verba de agosto (R$ 561,45 contra R$ 560,23), e a alta do investimento total vem da campanha nova de vagas.",
+  highlights:[
+    {v:"17",l:"Ligações pelo Google",s:"R$ 36,72 por ligação · primeiro mês completo"},
+    {v:"13",l:"Rotas até a empresa",s:"3 em agosto, quando o Google rodou 4 dias",dir:"up"},
+    {v:"R$ 0,34",l:"Por visita ao perfil",s:"abaixo da faixa de mercado, R$ 0,80 a R$ 3,00"},
+    {v:"27%",l:"Viram o vídeo até o fim",s:"14% em agosto, com o vídeo novo",dir:"up"}
+  ],
+  platforms:[
+    {k:"meta",name:"Meta Ads",sub:"Instagram e Facebook · 3 campanhas",inv:"R$ 948,22",invD:"+27,7%",invP:"R$ 742,77",
+     rows:[
+       {l:"Pessoas alcançadas",v:"60.015",p:"18.801",d:"+219,2%",dir:"up"},
+       {l:"Aparições do anúncio",v:"134.055",p:"71.264",d:"+88,1%",dir:"up"},
+       {l:"Cliques no anúncio",v:"2.999",p:"1.616",d:"+85,6%",dir:"up"}
+     ]},
+    {k:"google",name:"Google Ads",sub:"Busca, Maps e YouTube · Performance Max",inv:"R$ 624,20",invD:"+432,6%",invP:"R$ 117,20",
+     rows:[
+       {l:"Ligações a partir do anúncio",v:"17",p:"—",d:"novo",dir:"flat"},
+       {l:"Rotas até a empresa",v:"13",p:"3",d:"+333%",dir:"up"},
+       {l:"Aparições do anúncio",v:"27.857",p:"8.005",d:"+248%",dir:"up"}
+     ]}
+  ],
+  split:{meta:948.22, google:624.20},
+  campaigns:[
+    {name:"Instagram da Impacto Fire",goal:"Levar empresas e condomínios da região ao perfil",v:"1.659",vl:"visitas ao perfil",
+     rows:[{l:"Custo por visita",v:"R$ 0,34",d:"R$ 0,31 em ago",dir:"down"},{l:"Visitas ao perfil",v:"1.659",d:"−9,1%",dir:"down"},{l:"Pessoas alcançadas",v:"15.189",d:"+6,0%",dir:"up"},{l:"Investido",v:"R$ 561,45",d:"mesma verba",dir:"flat"}],
+     more:"Com a mesma verba de agosto, as visitas ficaram 9% abaixo e o custo por visita foi de R$ 0,31 para R$ 0,34. Ainda assim, é menos da metade do piso de referência para serviços locais (R$ 0,80) e um quarto do custo do carrossel feito só para anúncio em agosto (R$ 1,41). A campanha falou com mais gente (15.189 contra 14.330)."},
+    {name:"Vídeo institucional",goal:"Fazer a marca ser vista e lembrada na região",v:"4.622",vl:"vídeos assistidos",
+     rows:[{l:"Custo por vídeo assistido",v:"R$ 0,04",d:"igual a ago",dir:"flat"},{l:"Assistiram até o fim",v:"27%",d:"14% em ago",dir:"up"},{l:"Pessoas alcançadas",v:"3.051",d:"5.667 em ago",dir:"down"},{l:"Investido",v:"R$ 172,50",d:"−5,5%",dir:"flat"}],
+     more:"O vídeo novo segurou quase o dobro da atenção: 27% das aparições foram assistidas até o fim, contra 14% em agosto, ao mesmo custo de R$ 0,04 por vídeo. O alcance caiu porque cada aparição ficou mais cara na plataforma (R$ 21,53 por mil, contra R$ 13,25). A agência está revisando público e locais de exibição em outubro."},
+    {name:"Canal de vagas · Master Fire",goal:"Recrutamento: levar candidatos ao canal de vagas",v:"1.291",vl:"cliques no canal",isNew:true,
+     rows:[{l:"Custo por clique",v:"R$ 0,17"},{l:"Pessoas alcançadas",v:"41.077"},{l:"Aparições",v:"68.538"},{l:"Investido",v:"R$ 214,27"}],
+     more:"Campanha nova, no ar desde o início de setembro, sem mês anterior para comparar. Ela responde por quase todo o salto de alcance da conta (41.077 das 60.015 pessoas). O resultado dela são candidatos que chegaram ao canal, não clientes."}
+  ],
+  ads:[
+    {t:"Incêndio Bateria",f:"Vídeo · nasceu de um Reel orgânico",inv:"R$ 129,89",clicks:551,imp:"10.453",cpc:"R$ 0,24",org:true},
+    {t:"Sprinkler",f:"Vídeo · nasceu de um Reel orgânico",inv:"R$ 241,46",clicks:863,imp:"21.354",cpc:"R$ 0,28",org:true},
+    {t:"Bola extintora",f:"Carrossel feito para anúncio",inv:"R$ 139,83",clicks:210,imp:"20.272",cpc:"R$ 0,67",org:false}
+  ],
+  adsNote:"Os três anúncios somaram R$ 511,18 dos R$ 561,45 da campanha do Instagram. A Meta não informa visitas ao perfil por anúncio, então a comparação é por clique (investido ÷ cliques).",
+  video:{stages:[["Aparições",8011],["Viram 25%",5109],["Viram 50%",4713],["Viram 75%",2412],["Viram até o fim",2199]]},
+  audience:{
+    age:[["25 a 34",27.9],["35 a 44",24.8],["45 a 54",21.2],["55 a 64",17.1],["65 ou mais",9.0]],
+    gender:[["Homens",50.7],["Mulheres",49.1]],
+    plat:[["Instagram",60.8],["Facebook",31.2],["Parceiros Meta",6.6]],
+    place:[["Stories do Instagram",42.1],["Feed do Facebook",19.8],["Vídeo dentro de vídeo",11.1],["Reels do Instagram",10.6],["Feed do Instagram",8.2],["Vídeo com recompensa",6.2]],
+    device:[["Android",78.8],["iPhone",20.7]],
+    notes:["A verba se espalhou entre 25 e 64 anos, sem faixa dominante: o anúncio fala com adulto que decide.","Stories do Instagram levaram 42,1% da verba: peça vertical, com a mensagem nos primeiros segundos.","Android levou 78,8%: texto grande e imagem legível em tela de celular."]
+  },
+  google:{
+    kpis:[
+      {l:"Ligações a partir do anúncio",v:"17",s:"R$ 36,72 por ligação",d:"1º mês cheio",dir:"flat"},
+      {l:"Rotas até a empresa",v:"13",s:"Ago: 3",d:"+333%",dir:"up"},
+      {l:"Cliques",v:"560",s:"Ago: 386",d:"+45,1%",dir:"up"},
+      {l:"Custo por clique",v:"R$ 1,11",s:"Ago: R$ 0,30",d:"+270%",dir:"down"}
+    ],
+    funnel:[["Aparições do anúncio",27857,""],["Cliques",560,"2,0% das aparições"],["Ligações",17,"3,0% dos cliques"]],
+    calls:[0,1,0,0,0,3,0,1,0,0,0,1,0,0,0,2,2,0,0,0,3,0,0,1,1,0,1,0,1,0],
+    callsNote:"Houve ligação em 11 dos 30 dias, sem depender de uma data só, e a segunda quinzena teve mais dias com ligação (7) que a primeira (4).",
+    more:"O custo por clique subiu de R$ 0,30 para R$ 1,11, mas segue dentro da faixa de referência para serviços locais (R$ 0,80 a R$ 3,00). A Performance Max é otimizada para ligação e rota, não para clique barato: em agosto, nos 4 dias, foram 386 cliques e 3 rotas; em setembro, 560 cliques trouxeram 17 ligações e 13 rotas. Ligações e rotas não se somam, porque a mesma pessoa pode ter feito as duas coisas."
+  },
+  plan:{
+    working:[
+      "O custo por visita ao perfil (R$ 0,34) segue abaixo da metade do piso de mercado para serviços locais.",
+      "Os anúncios que nasceram de Reels orgânicos tiveram o clique mais barato do mês: R$ 0,24 e R$ 0,28.",
+      "O vídeo institucional novo dobrou a parcela de quem assiste até o fim (14% para 27%).",
+      "O Google trouxe ligações em 11 dias do mês, de forma distribuída, já no primeiro mês cheio."
+    ],
+    attention:[
+      {b:"Visitas ao perfil 9% abaixo de agosto, com a mesma verba",a:"Renovar os anúncios com os Reels que mais performarem no orgânico em outubro."},
+      {b:"Vídeo institucional alcançou menos gente (3.051 contra 5.667)",a:"Agência revisando público e locais de exibição em outubro."},
+      {b:"Custo por clique no Google subiu para R$ 1,11",a:"A campanha é medida por ligação e rota; outubro traz a primeira comparação mês cheio contra mês cheio."},
+      {b:"Ainda não sabemos quantas ligações viraram orçamento",a:"Registrar com o comercial a origem de cada contato a partir de outubro."}
+    ],
+    actions:[
+      {t:"Reels orgânicos como base dos anúncios",b:"Levar para o tráfego pago os Reels que mais performarem no orgânico.",w:"Incêndio Bateria e Sprinkler, que vieram de Reels orgânicos, tiveram clique a R$ 0,24 e R$ 0,28, contra R$ 0,67 do carrossel feito só para anúncio."},
+      {t:"Medir ligações que viram orçamento",b:"Registrar a origem de cada contato (Google, Instagram) junto com o comercial.",w:"Sabemos que chegaram 17 ligações e 13 rotas; falta saber quantas viraram pedido, que é o número que decide o resultado."},
+      {t:"Revisar o público do vídeo institucional",b:"Ajustar público e locais de exibição com a agência.",w:"O custo por mil aparições subiu de R$ 13,25 para R$ 21,53, mesmo com a retenção dobrando."},
+      {t:"Outubro como primeira comparação cheia no Google",b:"Comparar ligações e custo por ligação de mês cheio contra mês cheio.",w:"Agosto teve só 4 dias de Google, então setembro é a régua a partir de agora."}
+    ]
+  },
+  source:"Relatórios mensais da agência Alcance+ · Meta Ads (conta Grupo Fire, extraído em 05/10/2026) e Google Ads (conta 3275542905, extraído em 06/10/2026). Valores em reais, sem a mensalidade da agência."
+};
+
+const SECTIONS = [
+  {id:"geral", group:"Consolidado", name:"Visão geral", sub:"As três contas", brand:"master", kind:"overview",
+   logo:"img/master-logo.png", icon:"img/master-symbol.png", platforms:["instagram","facebook"], months:{}},
+  {id:"master", group:"Redes sociais", name:"Grupo Master", sub:"Instagram e Facebook", brand:"master", kind:"instagram",
+   logo:"img/master-logo.png", icon:"img/master-symbol.png", platforms:["instagram","facebook"], months:{"2026-09":MASTER_2026_09}},
+  {id:"impacto", group:"Redes sociais", name:"Impacto Fire", sub:"Instagram e Facebook", brand:"impacto", kind:"instagram",
+   logo:"img/impacto-logo.png", icon:"img/impacto-flame.png", platforms:["instagram","facebook"], months:{"2026-09":IMPACTO_2026_09}},
+  {id:"pratique", group:"Redes sociais", name:"Pratique", sub:"Instagram e Facebook", brand:"pratique", kind:"instagram", handle:"@pratique.ofc",
+   logo:"img/pratique-logo.png", icon:"img/pratique-q.png", platforms:["instagram","facebook"], months:{"2026-09":PRATIQUE_2026_09}},
+  {id:"trafego", group:"Tráfego pago", name:"Impacto Fire", sub:"Meta Ads + Google Ads", brand:"impacto", kind:"ads",
+   logo:"img/impacto-logo.png", icon:"img/impacto-flame.png", platforms:["meta","google"], months:{"2026-09":ADS_2026_09}},
+  {id:"trabalho", group:"Gestão", name:"Marketing global", sub:"Relatório geral do mês", brand:"master", kind:"work",
+   logo:"img/master-logo.png", icon:"img/master-symbol.png", platforms:[], months:{"2026-09":MARKETING_2026_09}}
+];
+const BRAND_GRAD = {pratique:"linear-gradient(120deg,#A9301D,#F07446)", impacto:"linear-gradient(120deg,#D42C11,#F38E22)", master:"linear-gradient(45deg,#248B95,#C9431F)"};
+const BRAND_GLOW = {pratique:"#CC3E27", impacto:"#D42C11", master:"#248B95"};
+const MONTHS_PT = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+/* ---------- ícones ---------- */
+const ICON = {
+  instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="#fff" stroke="none"/></svg>',
+  meta:'<svg viewBox="0 0 24 24" fill="none"><path d="M3.2 14.6c0-3.9 2-7.6 4.6-7.6 2.1 0 3.4 1.6 4.9 4.1l1 1.6c1.4 2.4 2.4 3.6 3.6 3.6 1.3 0 2-1.2 2-3.2 0-2.6-1.2-5-2.9-5-1 0-1.9.7-2.9 2" stroke="#2D8CFF" stroke-width="2.1" stroke-linecap="round"/><path d="M12.7 11.1C11 8.4 9.7 7 7.8 7 5.2 7 3.2 10.7 3.2 14.6c0 1.9.9 3 2.2 3 1.4 0 2.4-1.1 4.2-4.2" stroke="#0A7CFF" stroke-width="2.1" stroke-linecap="round"/></svg>',
+  google:'<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.7h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.5l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9z"/><path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.5l3.3 2.6C7.2 7.8 9.4 6 12 6z"/></svg>',
+  facebook:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path d="M13.4 21.9v-7.1h2.4l.4-2.8h-2.8v-1.8c0-.8.2-1.4 1.4-1.4h1.5V6.3c-.3 0-1.1-.1-2.2-.1-2.2 0-3.6 1.3-3.6 3.7V12H8.1v2.8h2.4v7.1z" fill="#fff"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  arrowR:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  linkedin:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4.5" fill="#0A66C2"/><path d="M7.2 10h2.3v7.3H7.2zM8.35 6.4a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zM11 10h2.2v1c.4-.7 1.2-1.2 2.4-1.2 2.3 0 2.7 1.5 2.7 3.5v4H16v-3.5c0-.9 0-2-1.2-2s-1.4.9-1.4 1.9v3.6H11z" fill="#fff"/></svg>',
+  camera:'<svg viewBox="0 0 24 24"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  globe:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>',
+  download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>',
+  up:'<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10V2M2.5 5.5 6 2l3.5 3.5"/></svg>',
+  down:'<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5"/></svg>',
+  check:'<svg viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.5-5"/></svg>',
+  alert:'<svg viewBox="0 0 12 12"><path d="M6 2.5v4M6 9.3v.1"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke="currentColor"/><path d="M12 11v5M12 8v.1" stroke="currentColor"/></svg>',
+  gapIco:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M12 3 2.5 20h19z" stroke="currentColor"/><path d="M12 10v4M12 17v.1" stroke="currentColor"/></svg>',
+  users:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.8c1.7.8 2.8 2.6 3 5.2"/></svg>',
+  pulse:'<svg viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"/></svg>',
+  chart:'<svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  target:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>',
+  clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  spark:'<svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>',
+  file:'<svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>'
+};
+
+/* ---------- utilidades ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const fmtN = n => n==null ? "—" : n.toLocaleString("pt-BR");
+const fmtP = n => n==null ? "—" : n.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const monthLabel = k => { const [y,m]=k.split("-"); return MONTHS_PT[+m-1]+" "+y; };
+const monthShort = k => { const [y,m]=k.split("-"); return MONTHS_PT[+m-1].slice(0,3)+"/"+y.slice(2); };
+const eyebrow = t => `<div class="eyebrow"><i></i><span>${t}</span><i></i></div>`;
+const delta = (d,dir) => `<span class="delta ${dir}">${dir==="up"?ICON.up:dir==="down"?ICON.down:""}${d}</span>`;
+const fmtChip = f => `<span class="fmt ${f==="Carrossel"?"car":""}"><i></i>${f}</span>`;
+const platChips = s => s.platforms.map(p=>`<span class="chip"><span class="pi">${ICON[p]}</span>${{instagram:"Instagram",facebook:"Facebook",meta:"Meta Ads",google:"Google Ads"}[p]}</span>`).join("");
+
+let toastT;
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),2800);}
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(html,x,y){tip.innerHTML=html;tip.classList.add("on");const r=tip.getBoundingClientRect();let L=x+14,T=y+14;if(L+r.width>innerWidth-8)L=x-r.width-14;if(T+r.height>innerHeight-8)T=y-r.height-14;tip.style.left=Math.max(8,L)+"px";tip.style.top=Math.max(8,T)+"px";}
+function hideTip(){tip.classList.remove("on");}
+function bindTips(root){
+  root.querySelectorAll("[data-tip]").forEach(el=>{
+    const h=()=>el.dataset.tip;
+    el.addEventListener("pointermove",e=>showTip(h(),e.clientX,e.clientY));
+    el.addEventListener("pointerleave",hideTip);
+    el.addEventListener("focus",()=>{const r=el.getBoundingClientRect();showTip(h(),r.right,r.top);});
+    el.addEventListener("blur",hideTip);
+  });
+}
+const tipHTML = (title,rows)=>`<b>${esc(title)}</b>`+rows.map(([k,v])=>`<div class="r"><span>${k}</span><span>${v}</span></div>`).join("");
+
+/* ---------- gráficos (SVG) ---------- */
+function niceMax(v){const p=Math.pow(10,Math.floor(Math.log10(v)));const n=v/p;const m=n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10;return m*p;}
+
+function drawPostBars(el,posts){
+  const W=Math.max(300,el.clientWidth), H=Math.round(Math.min(320,Math.max(230,W*.42)));
+  const m={t:26,r:8,b:46,l:44}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const max=niceMax(Math.max(...posts.map(p=>p.reach))*1.05), ticks=4;
+  const bw=Math.min(54,iw/posts.length-10), step=iw/posts.length;
+  const y=v=>m.t+ih-(v/max)*ih;
+  let g=`<defs><linearGradient id="bg-r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--a2)"/><stop offset="1" stop-color="var(--a1)"/></linearGradient><filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter></defs>`;
+  for(let i=0;i<=ticks;i++){const v=max/ticks*i,yy=y(v);g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${yy}" y2="${yy}" stroke="rgba(255,255,255,${i?0.06:0.14})"/><text x="${m.l-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#6F6E76" font-family="Geist Mono,monospace">${v>=1000?(v/1000).toLocaleString("pt-BR")+"k":v}</text>`;}
+  const maxI=posts.reduce((a,p,i)=>p.reach>posts[a].reach?i:a,0);
+  posts.forEach((p,i)=>{
+    const cx=m.l+step*i+step/2, x=cx-bw/2, yy=y(p.reach), h=Math.max(2,m.t+ih-yy), r=Math.min(4,h/2);
+    const path=`M${x},${m.t+ih} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+bw-r} Q${x+bw},${yy} ${x+bw},${yy+r} V${m.t+ih} Z`;
+    const reel=p.f==="Reels";
+    if(i===maxI) g+=`<path d="${path}" style="fill:var(--a1)" opacity=".55" filter="url(#gl)"/>`;
+    g+= reel ? `<path d="${path}" fill="url(#bg-r)"/>` : `<path d="${path}" style="fill:var(--a1)" fill-opacity=".22"/><path d="${path}" fill="none" style="stroke:var(--a-text)" stroke-width="1.4" stroke-opacity=".9"/>`;
+    g+=`<text x="${cx}" y="${H-m.b+18}" text-anchor="middle" font-size="11" fill="#A7A6AD" font-family="Geist Mono,monospace">${step<52?p.d.slice(0,2):p.d}</text>`;
+    if(i===maxI||p.reach>=1000) g+=`<text x="${cx}" y="${yy-8}" text-anchor="middle" font-size="12" fill="#F3F2EF" font-family="Geist,sans-serif" font-weight="500">${fmtN(p.reach)}</text>`;
+    const tipS=esc(tipHTML(p.t,[["Formato",p.f],["Data",p.d],["Alcance",fmtN(p.reach)],["Taxa de engaj.",fmtP(p.rate)]]));
+    g+=`<rect x="${m.l+step*i+2}" y="${m.t}" width="${step-4}" height="${ih}" fill="transparent" data-tip="${tipS}" tabindex="0" aria-label="${esc(p.t)}, ${p.d}, alcance ${fmtN(p.reach)}"/>`;
+  });
+  g+=`<text x="${m.l}" y="${H-8}" font-size="11" fill="#6F6E76" font-family="Geist,sans-serif">${step<52?"Dia de publicação em setembro":"Data de publicação · setembro"}</text>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Alcance por publicação em setembro">${g}</svg>`;
+  bindTips(el);
+}
+
+function drawPairBars(el,rows,key,fmt,title){
+  const W=Math.max(260,el.clientWidth), H=190, m={t:12,r:8,b:34,l:8}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const max=Math.max(...rows.flatMap(r=>[r.prev[key],r.cur[key]]))*1.18;
+  const gw=iw/rows.length, bw=Math.min(40,gw/3.2);
+  const y=v=>m.t+ih-(v/max)*ih;
+  let g=`<line x1="${m.l}" x2="${W-m.r}" y1="${m.t+ih}" y2="${m.t+ih}" stroke="rgba(255,255,255,.14)"/>`;
+  rows.forEach((r,i)=>{
+    const cx=m.l+gw*i+gw/2;
+    [["prev",-1],["cur",1]].forEach(([k,s])=>{
+      const v=r[k][key], x0=cx+(s<0?-bw-1:1), yy=y(v), h=m.t+ih-yy, rr=Math.min(4,h/2);
+      const path=`M${x0},${m.t+ih} V${yy+rr} Q${x0},${yy} ${x0+rr},${yy} H${x0+bw-rr} Q${x0+bw},${yy} ${x0+bw},${yy+rr} V${m.t+ih} Z`;
+      g+= k==="cur" ? `<path d="${path}" style="fill:var(--a1)"/>` : `<path d="${path}" fill="#3A3A41"/>`;
+      g+=`<text x="${x0+bw/2}" y="${yy-7}" text-anchor="middle" font-size="11.5" fill="${k==="cur"?"#F3F2EF":"#A7A6AD"}" font-family="Geist Mono,monospace">${fmt(v)}</text>`;
+      g+=`<rect x="${x0-1}" y="${m.t}" width="${bw+2}" height="${ih}" fill="transparent" data-tip="${esc(tipHTML(r.f+" · "+(k==="cur"?"Setembro":"Agosto"),[["Posts",r[k].posts],[title,fmt(v)]]))}"/>`;
+    });
+    g+=`<text x="${cx}" y="${H-10}" text-anchor="middle" font-size="12" fill="#A7A6AD" font-family="Geist,sans-serif">${r.f}</text>`;
+  });
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)} por formato, agosto e setembro">${g}</svg>`;
+  bindTips(el);
+}
+
+/* ---------- PDF ---------- */
+async function downloadPdf(pdf){
+  const dl = window.claude && window.claude.use ? await window.claude.use("downloads").catch(()=>null) : null;
+  if(!dl){ const a=document.createElement("a"); a.href=pdf.path; a.download=pdf.name; document.body.appendChild(a); a.click(); a.remove(); toast("Baixando o PDF."); return; }
+  try{
+    const res = await fetch(pdf.path); if(!res.ok) throw {code:"missing"};
+    const blob = await res.blob();
+    await dl.save({filename:pdf.name,data:blob});
+    toast("PDF salvo.");
+  }catch(e){
+    if(e && e.code==="declined") return;
+    if(e && e.code==="rate_limited"){toast("Já existe um download aguardando confirmação.");return;}
+    toast(e && e.code==="missing" ? "O PDF deste mês não foi encontrado." : "Não foi possível baixar o PDF agora.");
+  }
+}
+
+/* ---------- estado ---------- */
+const state = {sec:"pratique", month:{}};
+try{ const s=JSON.parse(localStorage.getItem("gm-rel")||"{}"); if(s.sec) state.sec=s.sec; if(s.month) state.month=s.month; }catch(e){}
+const h0=location.hash.slice(1); if(SECTIONS.some(s=>s.id===h0)) state.sec=h0;
+function save(){try{localStorage.setItem("gm-rel",JSON.stringify(state));}catch(e){}}
+const latest = s => Object.keys(s.months).sort().pop();
+
+/* ---------- navegação ---------- */
+function renderNav(){
+  const groups=[...new Set(SECTIONS.map(s=>s.group))];
+  $("#nav").innerHTML=groups.map(gname=>`<div class="nav-group"><div class="nav-label">${gname}</div>${SECTIONS.filter(s=>s.group===gname).map(s=>{
+    const has=s.kind==="overview"?SECTIONS.some(x=>x.kind==="instagram"&&latest(x)):!!latest(s);
+    return `<button class="nav-item" data-sec="${s.id}" ${s.id===state.sec?'aria-current="page"':""} style="--ngrad:${BRAND_GRAD[s.brand]};--nglow:${BRAND_GLOW[s.brand]};--ndot:${BRAND_GLOW[s.brand]}">
+      <span class="ico"><img src="${s.icon}" alt=""></span>
+      <span class="txt"><span class="t1">${s.name}</span><span class="t2">${s.sub}</span></span>
+      <span class="st ${has?"on":""}" title="${has?"Com relatório":"Sem relatório ainda"}"></span></button>`;}).join("")}</div>`).join("");
+  $("#mnav").innerHTML=SECTIONS.map(s=>`<button data-sec="${s.id}" ${s.id===state.sec?'aria-current="page"':""} style="--grad:${BRAND_GRAD[s.brand]}"><img src="${s.icon}" alt="">${s.kind==="ads"?"Tráfego pago":s.name}</button>`).join("");
+  const n=SECTIONS.filter(s=>s.kind!=="overview").reduce((a,s)=>a+Object.keys(s.months).length,0);
+  $("#sideFoot").innerHTML=`${n} relatório${n===1?"":"s"} publicado${n===1?"":"s"}.<br>Contas @pratique.ofc, Impacto Fire e Grupo Master.`;
+  document.querySelectorAll("[data-sec]").forEach(b=>b.onclick=()=>go(b.dataset.sec));
+  const cur=document.querySelector('.mnav [aria-current="page"]'); if(cur) cur.scrollIntoView({inline:"center",block:"nearest"});
+}
+function go(id){state.sec=id;save();try{history.replaceState(null,"","#"+id);}catch(e){}render();window.scrollTo({top:0});}
+
+/* ---------- hero ---------- */
+function hero(s,mk,title,lede,extra=""){
+  const keys=Object.keys(s.months).sort();
+  const data=mk?s.months[mk]:null;
+  const monthsHTML = keys.length ? keys.map(k=>`<button class="mbtn" data-m="${k}" aria-pressed="${k===mk}">${monthLabel(k)}</button>`).join("") : `<button class="mbtn" disabled>Nenhum mês ainda</button>`;
+  return `<header class="hero"><span class="arc c"></span><span class="arc"></span><span class="arc b"></span>
+    <div class="hero-in">
+      <div class="hero-top"><img class="hero-logo" src="${s.logo}" alt="${esc(s.kind==="ads"?"Impacto Fire":s.name)}">${platChips(s)}${data?`<span class="chip"><span class="dot"></span>${data.range}</span>`:""}</div>
+      <h1>${title}</h1>
+      ${lede?`<p class="lede">${lede}</p>`:""}
+      ${extra}
+      <div class="hero-actions">
+        ${s.kind==="overview"?"":`<div class="months" role="group" aria-label="Mês do relatório"><span class="lbl">Mês</span>${monthsHTML}</div>`}
+        ${s.kind==="overview"?"":`<button class="btn-pdf" id="pdfBtn" ${data&&data.pdf?"":"disabled"} title="${data&&data.pdf?"Baixar o PDF do relatório de "+monthLabel(mk):"O PDF aparece aqui quando o relatório do mês for publicado"}">${ICON.download}Baixar relatório (PDF)</button>`}
+      </div>
+    </div></header>`;
+}
+
+/* ---------- views ---------- */
+function render(){
+  const s=SECTIONS.find(x=>x.id===state.sec)||SECTIONS[0];
+  document.body.dataset.brand=s.brand;
+  renderNav();
+  const keys=Object.keys(s.months).sort();
+  let mk=state.month[s.id]; if(!keys.includes(mk)) mk=keys[keys.length-1];
+  const view=$("#view");
+  if(s.kind==="overview") view.innerHTML=viewOverview(s);
+  else if(mk && s.kind==="instagram") view.innerHTML=(s.months[mk].variant==="meta"?viewMeta:viewInstagram)(s,mk,s.months[mk]);
+  else if(mk && s.kind==="ads") view.innerHTML=viewAds(s,mk,s.months[mk]);
+  else if(mk && s.kind==="work") view.innerHTML=viewWork(s,mk,s.months[mk]);
+  else view.innerHTML=viewEmpty(s);
+  view.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.month[s.id]=b.dataset.m;save();render();});
+  const pb=$("#pdfBtn"); if(pb&&mk&&s.months[mk]&&s.months[mk].pdf) pb.onclick=()=>downloadPdf(s.months[mk].pdf);
+  view.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));
+  view.querySelectorAll(".seg").forEach(seg=>seg.querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    seg.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+    const host=document.getElementById(seg.dataset.for); host.querySelectorAll("[data-pane]").forEach(p=>p.hidden=p.dataset.pane!==b.dataset.pane);
+  }));
+  bindTips(view);
+  drawCharts();
+  document.title = s.kind==="overview" ? "Relatórios Grupo Master" : `${s.kind==="ads"?"Tráfego pago":s.name} · Relatórios Grupo Master`;
+}
+let chartJobs=[];
+function drawCharts(){chartJobs.forEach(j=>{const el=document.getElementById(j.id);if(el)j.fn(el);});}
+let rsT; addEventListener("resize",()=>{clearTimeout(rsT);rsT=setTimeout(drawCharts,120);});
+
+/* comparação agosto (viral + demais) × setembro */
+function drawViralCompare(el,V){
+  const W=Math.max(300,el.clientWidth), narrow=W<560;
+  const lw=narrow?0:120, H=narrow?190:150, m={t:narrow?26:10,r:10,b:26,l:lw};
+  const iw=W-m.l-m.r, bh=narrow?26:30, gap=narrow?48:28;
+  const max=V.aug.viral+V.aug.rest, x=v=>v/max*iw;
+  const augAvg=Math.round(V.aug.rest/V.aug.restPosts), sepAvg=Math.round(V.sep.total/V.sep.posts);
+  let g=`<defs><linearGradient id="vg" x1="0" x2="1"><stop offset="0" stop-color="var(--a1)"/><stop offset="1" stop-color="var(--a2)"/></linearGradient><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#232328"/><line x1="0" y1="0" x2="0" y2="7" stroke="#3B3B42" stroke-width="3"/></pattern></defs>`;
+  const rowY=[m.t, m.t+bh+gap];
+  const lab=(y,t)=> narrow ? `<text x="0" y="${y-8}" font-size="12" fill="#A7A6AD" font-family="Geist,sans-serif">${t}</text>` : `<text x="${lw-14}" y="${y+bh/2+4}" text-anchor="end" font-size="12.5" fill="#A7A6AD" font-family="Geist,sans-serif">${t}</text>`;
+  // agosto
+  let y=rowY[0]; g+=lab(y,"Agosto");
+  const wr=x(V.aug.rest), wv=x(V.aug.viral);
+  g+=`<rect x="${m.l}" y="${y}" width="${wr-1}" height="${bh}" rx="4" fill="#5A5A63" data-tip="${esc(tipHTML("Agosto · 5 posts normais",[["Alcance somado",fmtN(V.aug.rest)],["Média por post",fmtN(augAvg)]]))}"/>`;
+  g+=`<rect x="${m.l+wr+1}" y="${y}" width="${wv-1}" height="${bh}" rx="4" fill="url(#hatch)" data-tip="${esc(tipHTML("Agosto · Reel viral de 10/08",[["Alcance",fmtN(V.aug.viral)],["Parte do mês","82%"]]))}"/>`;
+  g+=`<text x="${m.l+wr+12}" y="${y+bh/2+4}" font-size="12" fill="#C9C8CE" font-family="Geist,sans-serif">1 Reel viral · ${fmtN(V.aug.viral)}</text>`;
+  if(!narrow) g+=`<text x="${m.l+6}" y="${y+bh/2+4}" font-size="11.5" fill="#F3F2EF" font-family="Geist Mono,monospace">${fmtN(V.aug.rest)}</text>`;
+  // setembro
+  y=rowY[1]; g+=lab(y,"Setembro");
+  const ws=x(V.sep.total);
+  g+=`<rect x="${m.l}" y="${y}" width="${ws}" height="${bh}" rx="4" fill="url(#vg)" data-tip="${esc(tipHTML("Setembro · 8 posts",[["Alcance somado",fmtN(V.sep.total)],["Média por post",fmtN(sepAvg)]]))}"/>`;
+  g+=`<text x="${m.l+ws+10}" y="${y+bh/2+4}" font-size="12" fill="#F3F2EF" font-family="Geist Mono,monospace">${fmtN(V.sep.total)}</text>`;
+  const H2=rowY[1]+bh+m.b;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H2}" role="img" aria-label="Alcance somado dos posts: agosto ${fmtN(V.aug.rest+V.aug.viral)}, sendo ${fmtN(V.aug.viral)} de um Reel viral; setembro ${fmtN(V.sep.total)}">${g}</svg>`;
+  bindTips(el);
+}
+
+const more = (inner,label="Ver mais") => `<details class="more"><summary><span>${label}</span>${ICON.chev}</summary><div class="more-in">${inner}</div></details>`;
+
+function viewInstagram(s,mk,D){
+  chartJobs=[
+    {id:"chViral",fn:el=>drawViralCompare(el,D.viral)},
+    {id:"chPosts",fn:el=>drawPostBars(el,D.posts)},
+    {id:"chFmtReach",fn:el=>drawPairBars(el,D.engagement.formats,"reach",fmtN,"Alcance médio")},
+    {id:"chFmtRate",fn:el=>drawPairBars(el,D.engagement.formats,"rate",fmtP,"Taxa ponderada")}
+  ];
+  const G=D.growth, E=D.engagement, Hk=D.hook, P=D.plan;
+  const kpiTile=x=>{const mx=Math.max(x.p,x.c);return `<div class="card kpi s-3">
+      <div class="k-l">${x.l}</div><div class="k-v">${fmtN(x.c)}</div>
+      <div class="k-row">${delta(x.d,x.dir)}<span>${D.prevShort}: ${fmtN(x.p)}</span></div>
+      <div class="bar2"><span>${D.prevShort}</span><i style="width:${x.p/mx*100}%"></i><span>Set</span><i class="cur" style="width:${x.c/mx*100}%"></i></div></div>`;};
+  const sub=[["resumo","Resumo"],["seguidores","Seguidores"],["engajamento","Engajamento"],["conteudos","Conteúdos"],["alcance","O que gera alcance"],["plano","Plano de ação"]];
+  const avgA=Math.round(Hk.a.total/Hk.a.n), avgB=Math.round(Hk.b.total/Hk.b.n);
+  const gmax=G.after;
+
+  return hero(s,mk,D.title,D.lede, `<div class="hero-more">${more(`<p>${esc(D.ledeMore)}</p>`,"Por que o alcance total caiu")}</div>`)+
+  `<div class="subnav"><div class="subnav-in">${sub.map(([id,t])=>`<a href="#${id}" onclick="event.preventDefault();document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${t}</a>`).join("")}</div></div>
+  <div class="wrap">
+
+  <section class="sec" id="resumo">${eyebrow("Resumo do mês")}
+    <h2 class="sec-h">O que avançou em setembro</h2>
+    <div class="hl">${D.highlights.map(h=>`<div class="card hl-i"><span class="hl-v">${h.v}${h.dir?`<span class="hl-ar ${h.dir}">${h.dir==="up"?ICON.up:ICON.down}</span>`:""}</span><span class="hl-l">${h.l}</span><span class="hl-s">${h.s}</span></div>`).join("")}</div>
+
+    <div class="grid g-12">
+      <div class="card glow s-12">
+        <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Por que o alcance total ficou abaixo de agosto</h3></div>
+        <p class="card-sub">Agosto teve um Reel viral fora da curva. Sem ele, setembro alcançou mais pessoas no total e por post.</p>
+        <div class="legend"><span><i style="background:#5A5A63"></i>Agosto, posts normais</span><span><i style="background:repeating-linear-gradient(45deg,#3B3B42 0 3px,#232328 3px 6px)"></i>Agosto, Reel viral</span><span><i style="background:var(--grad)"></i>Setembro</span></div>
+        <div class="chart" id="chViral"></div>
+        <div class="mini-cmp"><div><span class="v">${fmtN(1272)}</span><span class="l">média por post em agosto, sem o viral</span></div><span class="arr">→</span><div><span class="v" style="color:var(--a-text)">${fmtN(1444)}</span><span class="l">média por post em setembro</span></div>${delta("+13,5%","up")}</div>
+      </div>
+      ${D.kpis.map(kpiTile).join("")}
+    </div>
+    <p class="foot-note">${esc(D.kpiNote)}</p>
+
+    <div class="card s-12" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Alcance de cada post</h3></div>
+      <p class="card-sub">O Reel de 30/09 saiu no último dia e continuou crescendo em outubro.</p>
+      <div class="legend"><span><i style="background:var(--grad)"></i>Reels</span><span><i style="background:color-mix(in oklab,var(--a1) 22%,transparent);border:1.4px solid var(--a-text)"></i>Carrossel</span></div>
+      <div class="chart" id="chPosts"></div>
+      ${more(`<ul class="notes">${D.readNotes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`,"Notas sobre os números")}
+    </div>
+  </section>
+
+  <section class="sec" id="seguidores">${eyebrow("Seguidores")}
+    <h2 class="sec-h">A base cresceu 12% em setembro</h2>
+    <div class="grid g-12">
+      <div class="card glow s-7">
+        <div class="ba">
+          <div class="ba-i"><span class="ba-l">${G.beforeLabel}</span><span class="ba-v" style="color:var(--fg-2)">≈${fmtN(G.before)}</span><span class="ba-s">${G.beforeNote}</span></div>
+          <div class="ba-mid"><span class="delta up">${ICON.up}+${G.newF} · ${G.pct}</span><i></i></div>
+          <div class="ba-i"><span class="ba-l">${G.afterLabel}</span><span class="ba-v">${fmtN(G.after)}</span><span class="ba-s">seguidores</span></div>
+        </div>
+        <div class="ba-bar"><i style="width:${G.before/gmax*100}%"></i><b style="width:${G.newF/gmax*100}%"></b></div>
+        <p class="card-sub" style="margin-top:16px">${esc(G.lede)}</p>
+      </div>
+      <div class="card s-5">
+        <div class="card-h"><span class="icobox">${ICON.spark}</span><h3>Melhores momentos</h3></div>
+        <ul class="peaks">${G.peaks.map(p=>`<li><span class="pk-v">${p.v}</span><span><b>${p.l}</b><br><span>${p.s}</span></span></li>`).join("")}</ul>
+      </div>
+      <div class="card s-12">
+        <div class="card-h"><span class="icobox">${ICON.users}</span><h3>Quem nos segue</h3></div>
+        <div class="aud">
+          <div><span class="aud-h">Gênero</span>
+            <div class="split">${G.gender.map((x,i)=>`<i style="width:${x.v}%;background:${["var(--a1)","var(--a2)","#3A3A41"][i]}" data-tip="${esc(tipHTML(x.l,[["Seguidores",x.v+"%"]]))}"></i>`).join("")}</div>
+            <div class="legend">${G.gender.map((x,i)=>`<span><i style="background:${["var(--a1)","var(--a2)","#3A3A41"][i]}"></i>${x.l} ${x.v}%</span>`).join("")}</div></div>
+          <div><span class="aud-h">Idade</span><div class="aud-big">74%</div><span class="aud-s">têm entre 25 e 44 anos (25–34: 37% · 35–44: 38%)</span></div>
+          <div><span class="aud-h">Cidade principal</span><div class="aud-big">${G.city.l}</div><span class="aud-s">${G.city.v} seguidores, ${G.city.pct}</span></div>
+          <div><span class="aud-h">Estados</span><div class="hbars" style="margin-top:8px">${G.states.map(a=>`<div class="hb"><span class="n">${a.l}</span><span class="t"><i style="width:${a.v/G.states[0].v*100}%"></i></span><span class="v">${a.v}</span></div>`).join("")}</div></div>
+        </div>
+        ${more(`<ul class="notes gap">${G.more.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`,"Limites dos dados e pontos a checar")}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="engajamento">${eyebrow("Engajamento")}
+    <h2 class="sec-h">${esc(E.lede)}</h2>
+    <div class="grid g-12">
+      <div class="card glow s-5" style="display:flex;flex-direction:column;gap:12px">
+        <div class="card-h"><span class="icobox">${ICON.spark}</span><h3>Taxa de salvamento</h3></div>
+        <div class="stat-pair"><div><span class="v" style="font-size:48px">${E.save.v}</span><span class="l">${E.save.l}</span></div></div>
+        <div>${delta(E.save.d+" contra "+E.save.p,"up")}</div>
+      </div>
+      <div class="s-7 tiles2">${E.tiles.map(t=>`<div class="card kpi"><div class="k-l" style="min-height:0">${t.l}</div><div class="k-v" style="font-size:28px">${t.v}</div><div class="k-row">${delta(t.d,t.dir)}<span>${t.s}</span></div></div>`).join("")}</div>
+    </div>
+    <p class="foot-note">${esc(E.why)}</p>
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Cada formato tem um papel</h3></div>
+      <div class="roles">${E.roles.map(r=>`<p>${fmtChip(r.b)} <span>${esc(r.t)}</span></p>`).join("")}</div>
+      <div class="legend"><span><i style="background:#3A3A41"></i>Agosto</span><span><i style="background:var(--a1)"></i>Setembro</span></div>
+      <div class="twocol" style="margin-top:6px">
+        <div><p class="card-sub" style="margin-top:10px">Alcance médio por post</p><div class="chart" id="chFmtReach"></div></div>
+        <div><p class="card-sub" style="margin-top:10px">Taxa de engajamento</p><div class="chart" id="chFmtRate"></div></div>
+      </div>
+      ${more(`<p class="card-sub">${esc(E.formula)}</p><p class="card-sub" style="margin-top:8px">Setembro: 5 Reels e 3 carrosséis. Agosto: 3 Reels e 3 carrosséis. Não houve imagem estática nos dois meses. Stories não entram porque a API só guarda os dados por 24 horas.</p>`,"Como calculamos")}
+    </div>
+  </section>
+
+  <section class="sec" id="conteudos">${eyebrow("Conteúdos")}
+    <h2 class="sec-h">Os destaques do mês</h2>
+    <div class="podium">${D.top.map((r,i)=>`<a class="card pod ${i===0?"glow first":""}" href="${r.url}" target="_blank" rel="noopener">
+      <div class="pod-top"><span class="rank">${i+1}</span>${fmtChip(r.f)}<span class="pod-d">${r.d}</span></div>
+      <h3>${esc(r.t)}</h3>
+      <div><span class="pod-v">${r.v}</span> <span class="pod-vl">${r.vl}</span></div>
+      <p class="card-sub">${esc(r.h)}</p><span class="pod-link">Ver no Instagram ↗</span></a>`).join("")}</div>
+    <div class="card" style="margin-top:14px">
+      <p class="card-sub" style="max-width:none">${esc(D.base)}</p>
+      ${more(`<div class="tbl-wrap"><table><thead><tr><th>Post</th><th>Formato</th><th>Data</th><th class="num">Alcance</th><th class="num">Taxa</th><th>Leitura</th></tr></thead><tbody>${D.topMore.map(r=>`<tr><td><a class="pt" href="${r.url}" target="_blank" rel="noopener">${esc(r.t)}</a></td><td>${fmtChip(r.f)}</td><td class="num">${r.d}</td><td class="num">${r.reach}</td><td class="num">${r.rate}</td><td>${esc(r.h)}</td></tr>`).join("")}</tbody></table></div>`,"Ver os outros 5 posts")}
+    </div>
+  </section>
+
+  <section class="sec" id="alcance">${eyebrow("O que gera alcance")}
+    <h2 class="sec-h">${esc(Hk.lede)}</h2>
+    <div class="card glow" style="margin-top:28px">
+      <div class="cmp">
+        <div class="cmp-row"><div class="cmp-h"><b>${Hk.a.l}</b><span>${Hk.a.s}</span></div><div class="cmp-bar"><i class="hot" style="width:100%"></i></div><div class="cmp-v"><span class="v">${fmtN(avgA)}</span><span class="l">alcance médio por Reel</span></div></div>
+        <div class="cmp-row"><div class="cmp-h"><b>${Hk.b.l}</b><span>${Hk.b.s}</span></div><div class="cmp-bar"><i style="width:${Math.max(2,avgB/avgA*100)}%"></i></div><div class="cmp-v"><span class="v" style="color:var(--fg-2)">${fmtN(avgB)}</span><span class="l">alcance médio por Reel</span></div></div>
+      </div>
+      <p class="card-sub" style="margin-top:18px;max-width:none">Os Reels que abrem com uma cena de risco seguram mais gente no começo e chegam a <b style="color:var(--fg);font-weight:500">cerca de 10 vezes mais pessoas</b>. É a base da série semanal do plano de outubro.</p>
+      ${more(`<div class="tbl-wrap"><table style="min-width:420px"><thead><tr><th>Reel</th><th>Data</th><th class="num">Pularam nos 3 s</th><th class="num">Alcance</th></tr></thead><tbody>${Hk.reels.map(r=>`<tr><td style="color:var(--fg)">${esc(r.t)}</td><td class="num">${r.d}</td><td class="num">${r.skip}</td><td class="num">${r.reach}</td></tr>`).join("")}</tbody></table></div><p class="card-sub" style="margin-top:12px">${esc(Hk.hours)}</p>`,"Ver dados de cada Reel")}
+    </div>
+  </section>
+
+  <section class="sec" id="plano">${eyebrow("Plano de ação")}
+    <h2 class="sec-h">Os pontos de atenção já têm ação definida</h2>
+    <div class="grid g-12">
+      <div class="card s-5"><div class="card-h"><h3>O que já funciona</h3></div><ul class="lst ok">${P.working.map(t=>`<li><span class="mk">${ICON.check}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>
+      <div class="card s-7"><div class="card-h"><h3>Pontos de atenção e o que estamos fazendo</h3></div>
+        <ul class="att">${P.attention.map(t=>`<li><span class="att-p">${esc(t.b)}</span><span class="att-a">${ICON.arrowR}${esc(t.a)}</span></li>`).join("")}</ul></div>
+    </div>
+    <div class="actions ${P.actions.length%2===0?"even":""}">${P.actions.map((r,i)=>`<div class="card act ${i===0?"glow":""}"><span class="num">${String(i+1).padStart(2,"0")}</span><div class="act-b"><h3>${esc(r.t)}</h3><p>${esc(r.b)}</p>${more(`<p class="why">${esc(r.w)}</p>`,"Por quê")}</div></div>`).join("")}</div>
+  </section>
+
+  <footer class="foot"><span><b style="color:var(--fg-2);font-weight:500">Fonte:</b> ${esc(D.source)}</span><span>Setembro: ${D.range} · Agosto: ${D.prevRange}</span></footer>
+  </div>`;
+}
+
+function viewWork(s,mk,D){
+  chartJobs=[];
+  const gradOf=b=>b==="linkedin"?"linear-gradient(90deg,#0A66C2,#3B8FE0)":BRAND_GRAD[b];
+  const glowOf=b=>b==="linkedin"?"#0A66C2":BRAND_GLOW[b];
+  const maxD=Math.max(...D.brands.map(b=>b.d)), maxT=Math.max(...D.types.map(t=>t.d));
+  const H=D.humand, O=D.origin, tot=O.humand+O.direct;
+  const typeColor=["var(--a1)","#7A6656","var(--a2)","#5A8E93","#4A4A52"];
+  const sub=[["resumo","Resumo"],["marcas","Por marca"],["tipos","Por tipo"],["humand","Solicitações"],["campo","Captações e site"],["destaques","Destaques"]];
+  const brandLogo=b=>b.logo?`<img src="${b.logo}" alt="">`:`<span class="li-ico">${ICON.linkedin}</span>`;
+
+  return hero(s,mk,D.title,D.lede,`<div class="hero-more">${more(`<p>${esc(D.ledeMore)}</p>`,"Sobre a origem das demandas")}</div>`)+
+  `<div class="subnav"><div class="subnav-in">${sub.map(([id,t])=>`<a href="#${id}" onclick="event.preventDefault();document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${t}</a>`).join("")}</div></div>
+  <div class="wrap">
+
+  <section class="sec" id="resumo">${eyebrow("Resumo do mês")}
+    <h2 class="sec-h">O volume entregue em setembro</h2>
+    <div class="hl">${D.highlights.map(h=>`<div class="card hl-i"><span class="hl-v">${h.v}${h.dir?`<span class="hl-ar ${h.dir}">${h.dir==="up"?ICON.up:ICON.down}</span>`:""}</span><span class="hl-l">${h.l}</span><span class="hl-s">${h.s}</span></div>`).join("")}</div>
+    <div class="grid g-12">
+      <div class="card glow s-7">
+        <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>De onde veio o trabalho</h3></div>
+        <p class="card-sub">A maior parte das entregas não passa pelo Humand: vem do calendário editorial e de pedidos diretos.</p>
+        <div class="orig">
+          <div class="orig-bar"><i class="hot" style="width:${O.direct/tot*100}%" data-tip="${esc(tipHTML("Calendário editorial e pedidos diretos",[["Demandas",O.direct]]))}"></i><i style="width:${O.humand/tot*100}%" data-tip="${esc(tipHTML("Solicitações via Humand",[["Demandas",O.humand]]))}"></i></div>
+          <div class="orig-leg"><div><span class="v">${O.direct}</span><span class="l">calendário editorial e pedidos diretos</span></div><div style="text-align:right"><span class="v" style="color:var(--fg-2)">${O.humand}</span><span class="l">via Humand</span></div></div>
+        </div>
+      </div>
+      <div class="card s-5" style="display:flex;flex-direction:column;gap:14px">
+        <div class="card-h"><span class="icobox">${ICON.clock}</span><h3>Prazos</h3></div>
+        <div class="stat-pair"><div><span class="v" style="font-size:40px">${H.done} de ${H.total}</span><span class="l">solicitações do Humand concluídas</span></div></div>
+        <div class="stat-pair"><div><span class="v" style="font-size:40px;color:var(--a-text)">${H.emerg}</span><span class="l">emergências atendidas no prazo</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="marcas">${eyebrow("Por marca")}
+    <h2 class="sec-h">Entregas para as quatro frentes</h2>
+    <div class="card" style="margin-top:28px">
+      <div class="brands">${D.brands.map(b=>`<div class="br-row">
+        <div class="br-h"><span class="br-ico" style="--g:${gradOf(b.brand)};--gl:${glowOf(b.brand)}">${brandLogo(b)}</span><b>${b.b}</b></div>
+        <div class="br-bar"><i style="width:${b.d/maxD*100}%;background:${gradOf(b.brand)};box-shadow:0 0 14px -2px ${glowOf(b.brand)}"></i></div>
+        <div class="br-n"><span><b>${b.d}</b> demandas</span><span><b>${b.p}</b> peças</span><span><b>${b.v}</b> vídeos</span></div>
+        <p class="br-m">${esc(b.main)}</p></div>`).join("")}</div>
+    </div>
+  </section>
+
+  <section class="sec" id="tipos">${eyebrow("Por tipo")}
+    <h2 class="sec-h">Conteúdo educativo foi o maior volume</h2>
+    <div class="card" style="margin-top:28px">
+      <div class="split" style="height:14px">${D.types.map((t,i)=>`<i style="width:${t.d/45*100}%;background:${typeColor[i]}" data-tip="${esc(tipHTML(t.t,[["Demandas",t.d],["Peças",t.p]]))}"></i>`).join("")}</div>
+      <div class="types">${D.types.map((t,i)=>`<div class="ty"><i style="background:${typeColor[i]}"></i><span class="ty-t">${t.t}</span><span class="ty-n"><b>${t.d}</b> demandas · ${t.p} peças</span></div>`).join("")}</div>
+      <p class="card-sub" style="margin-top:14px;max-width:none">${esc(D.typesNote)}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="humand">${eyebrow("Solicitações via Humand")}
+    <h2 class="sec-h">Pedidos urgentes atendidos dentro do prazo</h2>
+    <div class="grid g-12">
+      <div class="card glow s-12">
+        <div class="hm">
+          <div><span class="hm-v">${H.done}<span>/${H.total}</span></span><span class="hm-l">concluídas</span></div>
+          <div><span class="hm-v">~1h30</span><span class="hm-l">para cada emergência com prazo de 2 h</span></div>
+          <div><span class="hm-v" style="color:var(--fg-2)">1</span><span class="hm-l">em espera, aguardando definição de quem pediu</span></div>
+        </div>
+        <p class="card-sub" style="margin-top:16px;max-width:none">${esc(H.note)}</p>
+        ${more(`<div class="tbl-wrap"><table style="min-width:760px"><thead><tr><th>Nº</th><th>Pedido</th><th>Solicitante</th><th>Aberto</th><th>Prioridade</th><th>Entrega</th><th>Status</th></tr></thead><tbody>${H.rows.map(r=>`<tr><td class="num" style="text-align:left">${r[0]}</td><td style="color:var(--fg)">${esc(r[1])}</td><td>${esc(r[2])}</td><td class="num" style="text-align:left">${r[3]}</td><td>${r[4]}</td><td class="num" style="text-align:left">${r[5]}</td><td><span class="status ${r[6]==="Concluída"?"on":""}"><i></i>${r[6]}</span></td></tr>`).join("")}</tbody></table></div>`,"Ver as 10 solicitações")}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="campo">${eyebrow("Captações e site")}
+    <h2 class="sec-h">Além da criação</h2>
+    <div class="grid g-12">
+      <div class="card s-7">
+        <div class="card-h"><span class="icobox">${ICON.camera}</span><h3>${D.shoots.length} captações em campo</h3></div>
+        <ul class="shoots">${D.shoots.map(x=>`<li><span class="sh-t">${esc(x.t)}${x.d?` <span class="mono" style="color:var(--fg-3);font-size:12px">${x.d}</span>`:""}</span><span class="sh-f">${x.f}</span><span class="sh-u">${esc(x.u)}</span></li>`).join("")}</ul>
+      </div>
+      <div class="card glow s-5">
+        <div class="card-h"><span class="icobox">${ICON.globe}</span><h3>Site da Impacto</h3></div>
+        <p class="card-sub">${esc(D.site.lede)}</p>
+        <ol class="steps">${D.site.steps.map(st=>`<li class="${st.done?"done":"doing"}"><span class="dot"></span><span><b>${esc(st.t)}</b><br><span>${st.s}</span></span></li>`).join("")}</ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="destaques">${eyebrow("Destaques do mês")}
+    <h2 class="sec-h">O que marcou setembro</h2>
+    <div class="hlist">${D.highlightsList.map(h=>`<div class="card"><h3 style="font-size:16px">${esc(h.b)}</h3><p class="card-sub" style="margin-top:6px">${esc(h.t)}</p></div>`).join("")}</div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.file}</span><h3>Lista completa</h3></div>
+      <p class="card-sub">Todas as 45 demandas, por marca. ${esc(D.listNote)}</p>
+      ${more(`<div class="tbl-wrap"><table style="min-width:720px"><thead><tr><th>Marca</th><th>Demanda</th><th>Tipo</th><th class="num">Peças</th><th>Formato</th><th>Humand</th><th>Data</th></tr></thead><tbody>${D.list.map(r=>`<tr><td>${r[0]}</td><td style="color:var(--fg)">${esc(r[1])}</td><td>${r[2]}</td><td class="num">${r[3]}</td><td>${esc(r[4])}</td><td class="mono" style="font-size:12px">${r[5]||"—"}</td><td class="num" style="text-align:left">${r[6]}</td></tr>`).join("")}</tbody></table></div>`,"Ver as 45 demandas")}
+    </div>
+  </section>
+
+  <footer class="foot"><span><b style="color:var(--fg-2);font-weight:500">Fonte:</b> ${esc(D.source)}</span></footer>
+  </div>`;
+}
+
+function drawStackRows(el,V){
+  const W=Math.max(300,el.clientWidth), narrow=W<560, lw=narrow?0:96, bh=narrow?26:30, gap=narrow?50:30, top=narrow?24:8;
+  const iw=W-lw-12, max=Math.max(V.aug.total,V.sep.total), x=v=>v/max*iw;
+  let g=`<defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="var(--a1)"/><stop offset="1" stop-color="var(--a2)"/></linearGradient><pattern id="hatch2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#232328"/><line x1="0" y1="0" x2="0" y2="7" stroke="#4A4A52" stroke-width="3"/></pattern></defs>`;
+  [["Agosto",V.aug],["Setembro",V.sep]].forEach(([lab,d],i)=>{
+    const y=top+i*(bh+gap);
+    g+= narrow?`<text x="0" y="${y-8}" font-size="12" fill="#A7A6AD" font-family="Geist,sans-serif">${lab}</text>`:`<text x="${lw-14}" y="${y+bh/2+4}" text-anchor="end" font-size="12.5" fill="#A7A6AD" font-family="Geist,sans-serif">${lab}</text>`;
+    const wr=x(d.rest), wv=x(d.viral);
+    g+=`<rect x="${lw}" y="${y}" width="${Math.max(1,wr-1)}" height="${bh}" rx="4" fill="${i?"url(#sg)":"#5A5A63"}" data-tip="${esc(tipHTML(lab+" · demais dias",[["Visualizações",fmtN(d.rest)]]))}"/>`;
+    g+=`<rect x="${lw+wr+1}" y="${y}" width="${Math.max(1,wv-1)}" height="${bh}" rx="4" fill="url(#hatch2)" data-tip="${esc(tipHTML(lab+" · "+d.vl,[["Visualizações",fmtN(d.viral)],["Parte do mês",Math.round(d.viral/d.total*100)+"%"]]))}"/>`;
+    const tx=lw+wr+wv+10, inside=tx+90>W;
+    g+=`<text x="${inside?lw+wr+wv-10:tx}" y="${y+bh/2+4}" text-anchor="${inside?"end":"start"}" font-size="12" fill="#F3F2EF" font-family="Geist Mono,monospace">${fmtN(d.total)}</text>`;
+  });
+  const H=top+2*bh+gap+10;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visualizações no Instagram: agosto ${fmtN(V.aug.total)}, sendo ${fmtN(V.aug.viral)} em dias de pico de virais; setembro ${fmtN(V.sep.total)}">${g}</svg>`;
+  bindTips(el);
+}
+
+function drawViewBars(el,posts){
+  const W=Math.max(300,el.clientWidth), H=Math.round(Math.min(300,Math.max(220,W*.4)));
+  const m={t:26,r:8,b:46,l:44}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const max=niceMax(Math.max(...posts.map(p=>p.reach))*1.05), step=iw/posts.length, bw=Math.min(54,step-10);
+  const y=v=>m.t+ih-(v/max)*ih;
+  let g=`<defs><linearGradient id="vb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--a2)"/><stop offset="1" stop-color="var(--a1)"/></linearGradient></defs>`;
+  for(let i=0;i<=4;i++){const v=max/4*i,yy=y(v);g+=`<line x1="${m.l}" x2="${W-m.r}" y1="${yy}" y2="${yy}" stroke="rgba(255,255,255,${i?0.06:0.14})"/><text x="${m.l-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#6F6E76" font-family="Geist Mono,monospace">${v>=1000?(v/1000).toLocaleString("pt-BR")+"k":v}</text>`;}
+  posts.forEach((p,i)=>{
+    const cx=m.l+step*i+step/2, x=cx-bw/2, yy=y(p.reach), h=Math.max(2,m.t+ih-yy), r=Math.min(4,h/2);
+    const path=`M${x},${m.t+ih} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+bw-r} Q${x+bw},${yy} ${x+bw},${yy+r} V${m.t+ih} Z`;
+    g+= p.f==="Reels"?`<path d="${path}" fill="url(#vb)"/>`:`<path d="${path}" style="fill:var(--a1)" fill-opacity=".25"/><path d="${path}" fill="none" style="stroke:var(--a-text)" stroke-width="1.4"/>`;
+    g+=`<text x="${cx}" y="${H-m.b+18}" text-anchor="middle" font-size="11" fill="#A7A6AD" font-family="Geist Mono,monospace">${step<52?p.d.slice(0,2):p.d}</text>`;
+    if(p.reach>=1000&&(step>=52||p.reach===Math.max(...posts.map(q=>q.reach)))) g+=`<text x="${cx}" y="${yy-8}" text-anchor="middle" font-size="12" fill="#F3F2EF" font-family="Geist,sans-serif" font-weight="500">${p.reach>=100000?Math.round(p.reach/1000)+" mil":fmtN(p.reach)}</text>`;
+    const rows=[["Formato",p.f],["Data",p.d],["Visualizações",fmtN(p.reach)]];
+    g+=`<rect x="${m.l+step*i+2}" y="${m.t}" width="${step-4}" height="${ih}" fill="transparent" data-tip="${esc(tipHTML(p.t,rows))}" tabindex="0" aria-label="${esc(p.t)}, ${p.d}, ${fmtN(p.reach)} visualizações"/>`;
+  });
+  g+=`<text x="${m.l}" y="${H-8}" font-size="11" fill="#6F6E76" font-family="Geist,sans-serif">${step<52?"Dia de publicação em setembro":"Data de publicação · setembro"}</text>`;
+  el.innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Visualizações de cada post em setembro">${g}</svg>`;
+  bindTips(el);
+}
+
+function viewMeta(s,mk,D){
+  chartJobs=[
+    ...(D.views?[{id:"chViews",fn:el=>drawStackRows(el,D.views)}]:[]),
+    {id:"chPostViews",fn:el=>drawViewBars(el,D.posts)}
+  ];
+  const G=D.growth, E=D.engagement, P=D.plan, F=D.facebook;
+  const kpiTile=x=>{const mx=Math.max(x.p,x.c);return `<div class="card kpi s-3">
+      <div class="k-l">${x.l}</div><div class="k-v">${fmtN(x.c)}</div>
+      <div class="k-row">${delta(x.d,x.dir)}<span>${D.prevShort}: ${fmtN(x.p)}</span></div>
+      <div class="bar2"><span>${D.prevShort}</span><i style="width:${x.p/mx*100}%"></i><span>Set</span><i class="cur" style="width:${x.c/mx*100}%"></i></div></div>`;};
+  const sub=[["resumo","Resumo"],["seguidores","Seguidores"],["engajamento","Engajamento"],["conteudos","Conteúdos"],["facebook","Facebook"],["plano","Plano de ação"]];
+  const gmax=G.after;
+  const cmpTable=rows=>`<div class="tbl-wrap"><table style="min-width:460px"><thead><tr><th>Indicador</th><th class="num">Ago</th><th class="num">Set</th><th class="num">Variação</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.l)}</td><td class="num" style="color:var(--fg-2)">${r.p}</td><td class="num">${r.c}</td><td class="num">${delta(r.d,r.dir)}</td></tr>`).join("")}</tbody></table></div>`;
+
+  return hero(s,mk,D.title,D.lede,`<div class="hero-more">${more(`<p>${esc(D.ledeMore)}</p>`,D.moreLabel||"Por que as visualizações caíram")}</div>`)+
+  `<div class="subnav"><div class="subnav-in">${sub.map(([id,t])=>`<a href="#${id}" onclick="event.preventDefault();document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${t}</a>`).join("")}</div></div>
+  <div class="wrap">
+
+  <section class="sec" id="resumo">${eyebrow("Resumo do mês")}
+    <h2 class="sec-h">O que avançou em setembro</h2>
+    <div class="hl">${D.highlights.map(h=>`<div class="card hl-i"><span class="hl-v">${h.v}${h.dir?`<span class="hl-ar ${h.dir}">${h.dir==="up"?ICON.up:ICON.down}</span>`:""}</span><span class="hl-l">${h.l}</span><span class="hl-s">${h.s}</span></div>`).join("")}</div>
+    <div class="grid g-12">
+      ${D.views?`<div class="card glow s-12">
+        <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Por que as visualizações ficaram abaixo de agosto</h3></div>
+        <p class="card-sub">Três quartos das visualizações de agosto vieram de apenas quatro dias, os picos de dois Reels virais.</p>
+        <div class="legend"><span><i style="background:repeating-linear-gradient(45deg,#4A4A52 0 3px,#232328 3px 6px)"></i>Dias de pico dos virais</span><span><i style="background:#5A5A63"></i>Demais dias, agosto</span><span><i style="background:var(--grad)"></i>Demais dias, setembro</span></div>
+        <div class="chart" id="chViews"></div>
+        <div class="mini-cmp"><div><span class="v">77%</span><span class="l">de agosto veio dos dias de pico dos virais</span></div><span class="arr">·</span><div><span class="v" style="color:var(--a-text)">49%</span><span class="l">em setembro, com um viral menor</span></div></div>
+      </div>`:`<div class="card glow s-12">
+        <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>${D.compare.title}</h3></div>
+        <p class="card-sub">${D.compare.sub}</p>
+        <div class="cmp" style="margin-top:20px">${[D.compare.a,D.compare.b].map((x,k)=>`<div class="cmp-row"><div class="cmp-h"><b>${x.l}</b></div><div class="cmp-bar"><i class="${k?"hot":""}" style="width:${x.v/Math.max(D.compare.a.v,D.compare.b.v)*100}%"></i></div><div class="cmp-v"><span class="v" style="${k?"":"color:var(--fg-2)"}">${fmtN(x.v)}</span><span class="l">visualizações</span></div></div>`).join("")}</div>
+        <div style="margin-top:16px">${delta(D.compare.d,"up")}</div>
+      </div>`}
+      ${D.kpis.map(kpiTile).join("")}
+    </div>
+    <p class="foot-note">${esc(D.kpiNote)}</p>
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Visualizações de cada post</h3></div>
+      <p class="card-sub">${D.postsSub}</p>
+      <div class="legend"><span><i style="background:var(--grad)"></i>Reels</span><span><i style="background:color-mix(in oklab,var(--a1) 25%,transparent);border:1.4px solid var(--a-text)"></i>Carrossel e foto</span></div>
+      <div class="chart" id="chPostViews"></div>
+      ${more(`<ul class="notes">${D.readNotes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`,"Notas sobre os números")}
+    </div>
+  </section>
+
+  <section class="sec" id="seguidores">${eyebrow("Seguidores")}
+    <h2 class="sec-h">${D.growth.h}</h2>
+    <div class="grid g-12">
+      <div class="card glow s-7">
+        <div class="ba">
+          <div class="ba-i"><span class="ba-l">${G.beforeLabel}</span><span class="ba-v" style="color:var(--fg-2)">≈${fmtN(G.before)}</span><span class="ba-s">${G.beforeNote}</span></div>
+          <div class="ba-mid"><span class="delta up">${ICON.up}+${G.newF} · ${G.pct}</span><i></i></div>
+          <div class="ba-i"><span class="ba-l">${G.afterLabel}</span><span class="ba-v">${fmtN(G.after)}</span><span class="ba-s">seguidores</span></div>
+        </div>
+        <div class="ba-bar"><i style="width:${G.before/gmax*100}%"></i><b style="width:${G.newF/gmax*100}%"></b></div>
+        <p class="card-sub" style="margin-top:16px">${esc(G.lede)}</p>
+      </div>
+      <div class="card s-5">
+        <div class="card-h"><span class="icobox">${ICON.spark}</span><h3>Destaques</h3></div>
+        <ul class="peaks">${G.peaks.map(p=>`<li><span class="pk-v">${p.v}</span><span><b>${p.l}</b>${p.d?" "+delta(p.d,p.dir):""}<br><span>${p.s}</span></span></li>`).join("")}</ul>
+      </div>
+      <div class="card s-12">
+        <div class="card-h"><span class="icobox">${ICON.users}</span><h3>Quem nos segue</h3></div>
+        <div class="aud">
+          <div><span class="aud-h">Gênero</span>
+            <div class="split">${G.gender.map((x,i)=>`<i style="width:${x.v}%;background:${["var(--a1)","var(--a2)"][i]}" data-tip="${esc(tipHTML(x.l,[["Seguidores",fmtP(x.v)]]))}"></i>`).join("")}</div>
+            <div class="legend">${G.gender.map((x,i)=>`<span><i style="background:${["var(--a1)","var(--a2)"][i]}"></i>${x.l} ${fmtP(x.v)}</span>`).join("")}</div></div>
+          <div><span class="aud-h">Idade</span><div class="aud-big">${G.age.big}</div><span class="aud-s">${G.age.s}</span></div>
+          <div><span class="aud-h">Cidade principal</span><div class="aud-big">${G.city.l}</div><span class="aud-s">${G.city.pct}</span></div>
+          <div><span class="aud-h">Principais cidades</span><div class="hbars" style="margin-top:8px">${G.cities.map(a=>`<div class="hb"><span class="n">${a.l}</span><span class="t"><i style="width:${a.v/G.cities[0].v*100}%"></i></span><span class="v">${fmtP(a.v)}</span></div>`).join("")}</div></div>
+        </div>
+        ${more(`<ul class="notes gap">${G.more.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`,"Notas sobre o público")}
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="engajamento">${eyebrow("Engajamento")}
+    <h2 class="sec-h">${esc(E.lede)}</h2>
+    <div class="grid g-12">
+      <div class="card glow s-5" style="display:flex;flex-direction:column;gap:12px">
+        <div class="card-h"><span class="icobox">${ICON.spark}</span><h3>${E.rateTitle||"Taxa de interação"}</h3></div>
+        <div class="stat-pair"><div><span class="v" style="font-size:48px">${E.rate.v}</span><span class="l">${E.rate.l}</span></div></div>
+        <div>${delta(E.rate.d+" · "+E.rate.p,"up")}</div>
+      </div>
+      <div class="s-7 tiles2">${E.tiles.map(t=>`<div class="card kpi"><div class="k-l" style="min-height:0">${t.l}</div><div class="k-v" style="font-size:28px">${t.v}</div><div class="k-row">${delta(t.d,t.dir)}<span>${t.s}</span></div></div>`).join("")}</div>
+    </div>
+    <p class="foot-note">${esc(E.why)}</p>
+    <div style="margin-top:6px">${more(`<p class="card-sub">${esc(E.formula)}</p>`,E.formulaLabel||"Como calculamos a taxa de interação")}</div>
+  </section>
+
+  <section class="sec" id="conteudos">${eyebrow("Conteúdos")}
+    <h2 class="sec-h">Os destaques do mês</h2>
+    <div class="podium">${D.top.map((r,i)=>`<div class="card pod ${i===0?"glow first":""}">
+      <div class="pod-top"><span class="rank">${i+1}</span>${fmtChip(r.f)}<span class="pod-d">${r.d}</span></div>
+      <h3>${esc(r.t)}</h3>
+      <div><span class="pod-v">${r.v}</span> <span class="pod-vl">${r.vl}</span></div>
+      <p class="card-sub">${esc(r.h)}</p></div>`).join("")}</div>
+    <div class="card" style="margin-top:14px">
+      <p class="card-sub" style="max-width:none">${esc(D.base)}</p>
+      ${more(`<div class="tbl-wrap"><table><thead><tr><th>Post</th><th>Formato</th><th>Data</th><th class="num">Visualizações</th><th class="num">Alcance</th><th>Leitura</th></tr></thead><tbody>${D.topMore.map(r=>`<tr><td style="color:var(--fg)">${esc(r.t)}</td><td>${fmtChip(r.f)}</td><td class="num">${r.d}</td><td class="num">${r.views}</td><td class="num">${r.reach}</td><td>${esc(r.h)}</td></tr>`).join("")}</tbody></table></div>`,"Ver os outros posts")}
+    </div>
+  </section>
+
+  <section class="sec" id="facebook">${eyebrow("Facebook")}
+    <h2 class="sec-h">${F.h}</h2>
+    <div class="card" style="margin-top:28px">
+      <div class="card-h"><span class="icobox raw" style="background:linear-gradient(var(--surface-2),var(--surface-2)) padding-box,linear-gradient(120deg,#1877F2,#5AA0FF) border-box;box-shadow:0 0 22px -6px #1877F2">${ICON.facebook}</span><h3>${F.title}</h3></div>
+      <p class="card-sub">${esc(F.lede)}</p>
+      ${cmpTable(F.rows)}
+      <p class="card-sub" style="margin-top:12px">${esc(F.note)}</p>
+    </div>
+  </section>
+
+  <section class="sec" id="plano">${eyebrow("Plano de ação")}
+    <h2 class="sec-h">Os pontos de atenção já têm ação definida</h2>
+    <div class="grid g-12">
+      <div class="card s-5"><div class="card-h"><h3>O que já funciona</h3></div><ul class="lst ok">${P.working.map(t=>`<li><span class="mk">${ICON.check}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>
+      <div class="card s-7"><div class="card-h"><h3>Pontos de atenção e o que estamos fazendo</h3></div>
+        <ul class="att">${P.attention.map(t=>`<li><span class="att-p">${esc(t.b)}</span><span class="att-a">${ICON.arrowR}${esc(t.a)}</span></li>`).join("")}</ul></div>
+    </div>
+    <div class="actions ${P.actions.length%2===0?"even":""}">${P.actions.map((r,i)=>`<div class="card act ${i===0?"glow":""}"><span class="num">${String(i+1).padStart(2,"0")}</span><div class="act-b"><h3>${esc(r.t)}</h3><p>${esc(r.b)}</p>${more(`<p class="why">${esc(r.w)}</p>`,"Por quê")}</div></div>`).join("")}</div>
+  </section>
+
+  <footer class="foot"><span><b style="color:var(--fg-2);font-weight:500">Fonte:</b> ${esc(D.source)}</span><span>Setembro: ${D.range} · Agosto: ${D.prevRange}</span></footer>
+  </div>`;
+}
+
+/* tráfego pago: ligações por dia (Google) */
+function drawDailyCalls(el,calls){
+  const W=Math.max(300,el.clientWidth), narrow=W<560, H=narrow?166:190, pl=22, pr=6, pt=30, pb=26;
+  const n=calls.length, cw=(W-pl-pr)/n, bw=Math.max(4,Math.min(16,cw*.58)), mx=3, ih=H-pt-pb;
+  const y=v=>pt+ih-(v/mx)*ih;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ligações por dia em setembro"><defs><linearGradient id="gCall" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--a1)"/><stop offset="1" stop-color="var(--a2)"/></linearGradient></defs>`;
+  for(let t=0;t<=mx;t++){s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(t)}" y2="${y(t)}" stroke="rgba(255,255,255,${t?0.05:0.12})"/><text x="${pl-8}" y="${y(t)+4}" text-anchor="end" fill="var(--fg-3)" font-size="10.5" font-family="var(--f-mono)">${t}</text>`;}
+  const half=pl+cw*15; s+=`<line x1="${half}" x2="${half}" y1="2" y2="${H-pb}" stroke="rgba(255,255,255,.14)" stroke-dasharray="3 4"/>`;
+  calls.forEach((v,i)=>{const x=pl+cw*i+(cw-bw)/2;
+    if(v>0) s+=`<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0)-y(v)}" rx="${Math.min(4,bw/2)}" fill="url(#gCall)" data-tip="${esc(tipHTML(String(i+1).padStart(2,"0")+"/09",[["Ligações",v]]))}"/>`;
+    else s+=`<circle cx="${x+bw/2}" cy="${y(0)-3}" r="1.6" fill="var(--fg-3)" opacity=".6"/>`;
+    if(i===0||(i+1)%5===0) s+=`<text x="${x+bw/2}" y="${H-8}" text-anchor="middle" fill="var(--fg-3)" font-size="10.5" font-family="var(--f-mono)">${String(i+1).padStart(2,"0")}/09</text>`;
+  });
+  s+=`<text x="${half-6}" y="12" text-anchor="end" fill="var(--fg-3)" font-size="10.5">1ª quinzena · 4 dias</text><text x="${half+6}" y="12" fill="var(--fg-3)" font-size="10.5">2ª quinzena · 7 dias</text>`;
+  el.innerHTML=s+"</svg>";
+}
+
+function viewAds(s,mk,D){
+  chartJobs=[{id:"chCalls",fn:el=>drawDailyCalls(el,D.google.calls)}];
+  const P=D.plan, G=D.google, A=D.audience;
+  const dN=(d,ar)=>`<span class="delta flat">${ar?ICON[ar]:""}${d}</span>`;
+  const sub=[["resumo","Resumo"],["meta","Meta Ads"],["google","Google Ads"],["plano","Plano de ação"]];
+  const tot=D.split.meta+D.split.google, pm=D.split.meta/tot*100;
+  const fmtR=v=>"R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const platIco=k=>`<span class="icobox raw">${ICON[k]}</span>`;
+  const bars=(rows,max)=>`<div class="hbars">${rows.map(([l,v])=>`<div class="hb"><span class="n">${l}</span><span class="t"><i style="width:${v/max*100}%"></i></span><span class="v">${fmtP(v)}</span></div>`).join("")}</div>`;
+  const vmax=D.video.stages[0][1], amax=Math.max(...D.ads.map(a=>a.clicks));
+
+  return hero(s,mk,D.title,D.lede,`<div class="hero-more">${more(`<p>${esc(D.ledeMore)}</p>`,"Como ler as comparações com agosto")}</div>`)+
+  `<div class="subnav"><div class="subnav-in">${sub.map(([id,t])=>`<a href="#${id}" onclick="event.preventDefault();document.getElementById('${id}').scrollIntoView({behavior:'smooth'})">${t}</a>`).join("")}</div></div>
+  <div class="wrap">
+
+  <section class="sec" id="resumo">${eyebrow("Resumo do mês")}
+    <h2 class="sec-h">O que o investimento trouxe em setembro</h2>
+    <div class="hl">${D.highlights.map(h=>`<div class="card hl-i"><span class="hl-v">${h.v}${h.dir?`<span class="hl-ar ${h.dir}">${h.dir==="up"?ICON.up:ICON.down}</span>`:""}</span><span class="hl-l">${h.l}</span><span class="hl-s">${h.s}</span></div>`).join("")}</div>
+    <div class="card glow" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Onde a verba foi investida</h3></div>
+      <p class="card-sub">${fmtR(tot)} no mês, contra R$ 859,97 em agosto. ${dN("+82,8%","up")}</p>
+      <div class="splitbar"><i class="m" style="width:${pm}%"></i><i class="g" style="width:${100-pm}%"></i></div>
+      <div class="split-leg">
+        <div><span class="sl-k"><i class="m"></i>Meta Ads</span><span class="sl-v">${fmtR(D.split.meta)}</span><span class="sl-l">${fmtP(pm)} da verba</span></div>
+        <div style="text-align:right;align-items:flex-end"><span class="sl-k"><i class="g"></i>Google Ads</span><span class="sl-v">${fmtR(D.split.google)}</span><span class="sl-l">${fmtP(100-pm)} da verba</span></div>
+      </div>
+    </div>
+    <div class="grid g-12" style="margin-top:14px">${D.platforms.map(p=>`<div class="card s-6 plat">
+      <div class="card-h">${platIco(p.k)}<h3>${p.name}</h3><span class="plat-sub">${p.sub}</span></div>
+      <div class="plat-inv"><span class="v">${p.inv}</span><span class="l">investidos · ${p.invP} em ago ${dN(p.invD,"up")}</span></div>
+      <ul class="kvl">${p.rows.map(r=>`<li><span class="k">${r.l}</span><span class="p">${D.prevShort}: ${r.p}</span><span class="v">${r.v}</span>${delta(r.d,r.dir)}</li>`).join("")}</ul>
+    </div>`).join("")}</div>
+    <p class="foot-note">Investimento em anúncio, sem a mensalidade da agência. A variação do investimento aparece em cinza porque é decisão de verba, não resultado.</p>
+  </section>
+
+  <section class="sec" id="meta">${eyebrow("Meta Ads")}
+    <h2 class="sec-h">Três campanhas, cada uma com um objetivo</h2>
+    <div class="camps">${D.campaigns.map((c,i)=>`<div class="card camp ${i===0?"glow":""}">
+      <div class="camp-top"><span class="camp-n">${c.name}</span>${c.isNew?`<span class="status on"><i></i>Nova</span>`:""}</div>
+      <span class="camp-g">${c.goal}</span>
+      <div class="camp-r"><span class="v">${c.v}</span><span class="l">${c.vl}</span></div>
+      <ul class="kvl sm">${c.rows.map(r=>`<li><span class="k">${r.l}</span><span class="v">${r.v}</span>${r.d?(r.dir==="flat"?dN(r.d):delta(r.d,r.dir)):""}</li>`).join("")}</ul>
+      ${more(`<p>${esc(c.more)}</p>`,"Leitura da campanha")}
+    </div>`).join("")}</div>
+    <p class="foot-note">Visitas, vídeos assistidos e cliques em vagas medem coisas diferentes e não se somam. O alcance também não: a mesma pessoa pode ter visto mais de uma campanha.</p>
+
+    <div class="grid g-12">
+      <div class="card s-7">
+        <div class="card-h"><span class="icobox">${ICON.spark}</span><h3>Conteúdo orgânico barateou o anúncio</h3></div>
+        <p class="card-sub">Os dois anúncios que nasceram de Reels do perfil tiveram o clique mais barato do mês.</p>
+        <div class="ads">${D.ads.map(a=>`<div class="ad ${a.org?"org":""}">
+          <div class="ad-h"><b>${a.t}</b><span>${a.f}</span></div>
+          <div class="ad-bar"><i style="width:${a.clicks/amax*100}%"></i></div>
+          <div class="ad-n"><span><b>${fmtN(a.clicks)}</b> cliques</span><span class="ad-c">${a.cpc}<small>/clique</small></span></div>
+        </div>`).join("")}</div>
+        ${more(`<p class="card-sub" style="max-width:none">${esc(D.adsNote)}</p><div class="tbl-wrap"><table style="min-width:440px"><thead><tr><th>Anúncio</th><th class="num">Investido</th><th class="num">Cliques</th><th class="num">Aparições</th><th class="num">Custo/clique</th></tr></thead><tbody>${D.ads.map(a=>`<tr><td style="color:var(--fg)">${a.t}</td><td class="num">${a.inv}</td><td class="num">${fmtN(a.clicks)}</td><td class="num">${a.imp}</td><td class="num">${a.cpc}</td></tr>`).join("")}</tbody></table></div>`,"Ver a tabela")}
+      </div>
+      <div class="card s-5">
+        <div class="card-h"><span class="icobox">${ICON.pulse}</span><h3>Até onde assistiram o vídeo</h3></div>
+        <p class="card-sub">Vídeo institucional novo. 27% das aparições foram até o fim, contra 14% em agosto.</p>
+        <div class="vfun">${D.video.stages.map(([l,v],i)=>`<div class="vf ${i===D.video.stages.length-1?"last":""}"><span class="n">${l}</span><span class="t"><i style="width:${v/vmax*100}%"></i></span><span class="v">${fmtN(v)}</span></div>`).join("")}</div>
+        <div style="margin-top:14px">${delta("27% até o fim · 14% em ago","up")}</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-h"><span class="icobox">${ICON.users}</span><h3>Quem viu os anúncios</h3></div>
+      <p class="card-sub">Participação de cada grupo na verba do Meta.</p>
+      <div class="aud ads-aud">
+        <div><span class="aud-h">Idade</span>${bars(A.age,A.age[0][1])}</div>
+        <div><span class="aud-h">Gênero</span>
+          <div class="split">${A.gender.map((x,i)=>`<i style="width:${x[1]}%;background:${["var(--a1)","var(--a2)"][i]}"></i>`).join("")}</div>
+          <div class="legend">${A.gender.map((x,i)=>`<span><i style="background:${["var(--a1)","var(--a2)"][i]}"></i>${x[0]} ${fmtP(x[1])}</span>`).join("")}</div>
+          <span class="aud-h" style="display:block;margin-top:20px">Aparelho</span>
+          <div class="aud-big">${fmtP(A.device[0][1])}</div><span class="aud-s">no Android · ${fmtP(A.device[1][1])} no iPhone</span></div>
+        <div><span class="aud-h">Plataforma</span>${bars(A.plat,A.plat[0][1])}</div>
+      </div>
+      ${more(`<span class="aud-h">Onde o anúncio apareceu</span>${bars(A.place,A.place[0][1])}<ul class="notes" style="margin-top:16px">${A.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`,"Ver onde apareceu")}
+    </div>
+  </section>
+
+  <section class="sec" id="google">${eyebrow("Google Ads")}
+    <h2 class="sec-h">17 ligações no primeiro mês completo</h2>
+    <p class="sec-lede">Performance Max: o anúncio aparece na busca, no Maps, no YouTube e em sites parceiros, e é otimizado para ligação e rota até a empresa.</p>
+    <div class="grid g-12">${G.kpis.map((k,i)=>`<div class="card kpi s-3 ${i===0?"glow":""}">
+      <div class="k-l">${k.l}</div><div class="k-v">${k.v}</div>
+      <div class="k-row">${k.dir==="flat"?dN(k.d):delta(k.d,k.dir)}<span>${k.s}</span></div></div>`).join("")}</div>
+    <div class="grid g-12">
+      <div class="card s-5">
+        <div class="card-h"><span class="icobox">${ICON.target}</span><h3>Do anúncio à ligação</h3></div>
+        <div class="gfun">${G.funnel.map(([l,v,p],i)=>`<div class="gf"><div class="gf-b" style="width:${[100,62,30][i]}%"><span class="v">${fmtN(v)}</span></div><div class="gf-l"><b>${l}</b>${p?`<span>${p}</span>`:""}</div></div>`).join("")}</div>
+        <p class="card-sub" style="margin-top:14px">Além das ligações, 13 pessoas pediram ao Google a rota até o endereço.</p>
+      </div>
+      <div class="card s-7">
+        <div class="card-h"><span class="icobox">${ICON.chart}</span><h3>Ligações por dia</h3></div>
+        <p class="card-sub">${esc(G.callsNote)}</p>
+        <div class="chart" id="chCalls"></div>
+      </div>
+    </div>
+    <div style="margin-top:6px">${more(`<p class="card-sub" style="max-width:90ch">${esc(G.more)}</p>`,"Por que o custo por clique subiu")}</div>
+  </section>
+
+  <section class="sec" id="plano">${eyebrow("Plano de ação")}
+    <h2 class="sec-h">Os pontos de atenção já têm ação definida</h2>
+    <div class="grid g-12">
+      <div class="card s-5"><div class="card-h"><h3>O que já funciona</h3></div><ul class="lst ok">${P.working.map(t=>`<li><span class="mk">${ICON.check}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>
+      <div class="card s-7"><div class="card-h"><h3>Pontos de atenção e o que estamos fazendo</h3></div>
+        <ul class="att">${P.attention.map(t=>`<li><span class="att-p">${esc(t.b)}</span><span class="att-a">${ICON.arrowR}${esc(t.a)}</span></li>`).join("")}</ul></div>
+    </div>
+    <div class="actions ${P.actions.length%2===0?"even":""}">${P.actions.map((r,i)=>`<div class="card act ${i===0?"glow":""}"><span class="num">${String(i+1).padStart(2,"0")}</span><div class="act-b"><h3>${esc(r.t)}</h3><p>${esc(r.b)}</p>${more(`<p class="why">${esc(r.w)}</p>`,"Por quê")}</div></div>`).join("")}</div>
+  </section>
+
+  <footer class="foot"><span><b style="color:var(--fg-2);font-weight:500">Fonte:</b> ${esc(D.source)}</span><span>Setembro: ${D.range} · Agosto: ${D.prevRange}</span></footer>
+  </div>`;
+}
+
+function viewEmpty(s){
+  chartJobs=[];
+  const plans={
+    instagram:["Visão geral do mês contra o anterior","Crescimento de seguidores e perfil do público","Engajamento por formato","Top e baixo desempenho","Diagnóstico, recomendações e roteiros"],
+    ads:["Investimento, alcance e frequência por campanha","Custo por visita ao perfil e por ThruPlay","Comparativo Meta Ads × Google Ads","Ranking de anúncios e otimizações","Pontos de atenção e plano de ação"],
+    work:["Entregas do mês por marca","Calendário editorial: publicado × planejado","Produção de vídeo, design e copy","Destaques e resultados do período","Próximos passos"]
+  }[s.kind];
+  const titles={instagram:`Redes sociais da <em>${s.name}</em>`,ads:`Tráfego pago da <em>Impacto Fire</em>`,work:`<em>Marketing global</em> do Grupo Master`};
+  const ledes={instagram:"O primeiro relatório desta conta ainda não foi publicado. Assim que chegar, ele aparece aqui no mesmo formato do relatório da Pratique.",ads:"Campanhas de Meta Ads e Google Ads. O primeiro relatório ainda não foi publicado aqui.",work:"Um resumo mensal da produção e da gestão de conteúdo nas três marcas. O primeiro relatório ainda não foi publicado."};
+  return hero(s,null,titles[s.kind],ledes[s.kind])+`<div class="wrap">
+    <div class="empty">
+      <div class="card glass orb">
+        <span class="ring g" style="width:230px;height:230px"></span><span class="ring" style="width:160px;height:160px"></span><span class="ring" style="width:300px;height:300px;opacity:.5"></span>
+        <span class="sat" style="transform:translate(115px,0)"></span><span class="sat" style="transform:translate(-80px,-58px)"></span><span class="sat" style="transform:translate(-50px,140px);opacity:.6"></span>
+        <span class="core"><img src="${s.icon}" alt=""></span>
+      </div>
+      <div class="card">
+        <div class="card-h"><span class="icobox">${ICON.file}</span><h3>O que vai aparecer aqui</h3></div>
+        <ul class="lst ok">${plans.map(p=>`<li><span class="mk">${ICON.check}</span><span>${p}</span></li>`).join("")}</ul>
+        <p class="card-sub" style="margin-top:18px">Cada mês ganha um botão próprio no seletor acima, com o PDF do relatório para baixar.</p>
+      </div>
+    </div></div>`;
+}
+
+function viewOverview(s){
+  chartJobs=[];
+  const accts=SECTIONS.filter(x=>x.kind==="instagram");
+  const withData=accts.filter(a=>latest(a));
+  const card=a=>{const mk=latest(a), D=mk?a.months[mk]:null;
+    const kp=l=>D.kpis.find(x=>x.l.startsWith(l));
+    return `<button class="card acc s-4" data-go="${a.id}" style="--a1:${BRAND_GLOW[a.brand]};--grad:${BRAND_GRAD[a.brand]}">
+      <div class="top"><img src="${a.logo}" alt="${a.name}"><span class="status ${D?"on":""}"><i></i>${D?monthShort(mk):"Aguardando"}</span></div>
+      ${D?`<div class="mini">
+        ${D.summary.map(x=>`<div class="mm"><div class="mm-v"><span class="v">${x.v}</span>${x.d?delta(x.d,x.dir||"up"):""}</div><div class="l">${x.l}</div></div>`).join("")}
+      </div>`:`<p class="wait">O primeiro relatório desta conta ainda não foi publicado.</p>`}
+      <span class="card-sub" style="font-size:12.5px;color:var(--fg-2)">${D?"Abrir relatório →":"Ver seção →"}</span></button>`;};
+  const insights = withData.map(a=>{const D=a.months[latest(a)], P=D.plan.actions[0];return `<div class="pr" style="--g:${BRAND_GRAD[a.brand]};--gl:${BRAND_GLOW[a.brand]}"><div class="pr-h"><span class="br-ico"><img src="${a.icon}" alt=""></span><b>${a.name}</b><span>${D.label}</span></div><h4>${esc(P.t)}</h4><p>${esc(P.b)}</p></div>`;}).join("");
+  return hero(s,null,`As redes sociais do <em style="white-space:nowrap">Grupo Master</em> em um só lugar`,`Resumo do último relatório publicado de cada conta. ${withData.length} de ${accts.length} contas com dados até agora.`)+
+  `<div class="wrap"><section class="sec">${eyebrow("Redes sociais")}
+    <h2 class="sec-h">Último mês de cada conta</h2>
+    <div class="grid g-12">${accts.map(card).join("")}</div>
+    ${withData.length?`<div class="card" style="margin-top:14px"><div class="card-h"><span class="icobox">${ICON.spark}</span><h3>Prioridades em aberto</h3></div><div class="prio">${insights}</div></div>`:""}
+  </section>
+  <section class="sec">${eyebrow("Outros relatórios")}
+    <div class="grid g-12">
+      ${SECTIONS.filter(x=>x.kind==="ads"||x.kind==="work").map(x=>`<button class="card acc s-6" data-go="${x.id}" style="--a1:${BRAND_GLOW[x.brand]};--grad:${BRAND_GRAD[x.brand]}"><div class="top"><div class="card-h" style="margin:0"><span class="icobox"><img src="${x.icon}" alt="" style="width:14px"></span><h3>${x.kind==="ads"?"Tráfego pago · Impacto Fire":"Marketing global"}</h3></div><span class="status ${latest(x)?"on":""}"><i></i>${latest(x)?monthShort(latest(x)):"Aguardando"}</span></div><p class="card-sub">${!latest(x)?x.sub:x.kind==="work"?x.months[latest(x)].highlights.map(h=>h.v+" "+h.l).slice(0,3).join(" · "):x.months[latest(x)].summary.map(m=>m.v+" "+m.l).join(" · ")}</p></button>`).join("")}
+    </div></section></div>`;
+}
+
+render();
+</script>
+</body>
+</html>
